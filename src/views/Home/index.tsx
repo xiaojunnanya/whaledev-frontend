@@ -1,5 +1,8 @@
 import { memo } from 'react'
 import Header from '@/components/Header/index.tsx'
+import Footer from '@/components/Footer'
+import { HomeStyled } from './style'
+import { Button } from 'antd'
 
 export default memo(() => {
   return (
@@ -8,10 +11,13 @@ export default memo(() => {
         <Header></Header>
       </header>
       <section>
-        2
+        <HomeStyled>
+          <Button>立即使用</Button>
+          <Button>体验Demo</Button>
+        </HomeStyled>
       </section>
       <footer>
-        1
+        <Footer></Footer>
       </footer>
     </div>
   )

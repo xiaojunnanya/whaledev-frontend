@@ -12,7 +12,8 @@ export default memo(() => {
             <h1>鲸灵开发</h1>
         </div>
         <div className='login'>
-            <Button>登录 / 注册</Button>
+            <Button>注册</Button>
+            <Button type='primary'>登录</Button>
         </div>
     </HeaderStyle>
   )
