@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 提示用户输入提交信息，如果未输入，则使用默认值
-read -p "请输入提交信息 (默认: 新增文章): " commit_message
+read -p "请输入提交信息 (默认: 更新代码): " commit_message
 
 # 如果用户未输入，使用默认值
 if [ -z "$commit_message" ]; then
