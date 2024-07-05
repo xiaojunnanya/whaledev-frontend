@@ -1,17 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const countSlice = createSlice({
+
+interface IState{
+    mode: 'login' | 'forget' | 'account',
+}
+
+const initialState: IState = {
+    mode:'login',
+}
+
+const loginSlice = createSlice({
     name:"login",
-    initialState:{
-        mode: 'login'
-    },
+    initialState,
     reducers:{
+        // 选择注册方式：登录、注册、忘记密码
         changeMode(state, { payload }){
             state.mode = payload
         }
     }
 })
 
-export const { changeMode } = countSlice.actions
+export const { changeMode } = loginSlice.actions
 
-export default countSlice.reducer
+export default loginSlice.reducer
