@@ -11,6 +11,7 @@
     "pre-check": "tsc && npx lint-staged"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.7",
     "@reduxjs/toolkit": "^2.2.5",
     "antd": "^5.18.3",
     "react": "^18.2.0",
