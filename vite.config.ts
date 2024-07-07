@@ -8,5 +8,17 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  server:{
+    host:'localhost',
+    port:5173,
+    open: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace('/api', '')
+      }
+    }
   }
 })
