@@ -27,7 +27,19 @@ export default memo(() => {
     <>
       <Form name="normal_login" className="login-form" onFinish={onFinish}>
           <Form.Item name="username"
-              rules={[{ required: true, message: '请输入邮箱' }]} >
+              rules={[
+                { required: true, message: '请输入邮箱' },
+                {
+                    validator(rule, value, callback) {
+                      // 必须既有数字也有字母
+                      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                          callback('请输入合法的邮箱格式');
+                      }else{
+                          return Promise.resolve()
+                      }
+                    },
+                }
+              ]} >
               <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="请输入邮箱" />
           </Form.Item>
           <div className='emailCode'>
