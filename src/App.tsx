@@ -1,17 +1,56 @@
 import { memo, useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import routes from './router'
-import { message } from 'antd'
+import { message, notification } from 'antd'
 import { useAppSelector, useAppShallowEqual } from './store'
 
 const App = memo(() => {
-  const [ messageApi, contextHolder ] = message.useMessage()
+  const [ messageApi, msgContextHolder ] = message.useMessage()
+  const [ errorApi, errContextHolder ] = notification.useNotification();
 
   const { mess } = useAppSelector((state)=>{
     return {
       mess: state.global.globalMessage
     }
   }, useAppShallowEqual)
+
+  // 捕获错误：系统+网络(通过promise.reject抛出)
+  const catchErr = (e: any) =>{
+    let notificationMessage = {
+      message: 'Error',
+      description:'Unknown error',
+      duration: 3,
+    }
+
+    if(e.reason){
+      const { reason } = e
+      // promise.reject抛出
+      notificationMessage = {
+        ...notificationMessage,
+        message: reason.name,
+        description: reason.message
+      }
+    }else{
+      // 系统错误
+      notificationMessage = {
+        ...notificationMessage,
+        description: e.message
+      }
+    }
+    
+    // 除了弹窗提示，也需要上报：采用上传gif
+    errorApi.error(notificationMessage)
+  }
+
+  useEffect(()=>{
+    window.addEventListener('error', catchErr)
+    window.addEventListener('unhandledrejection', catchErr)
+
+    return () => {
+      window.removeEventListener('error', catchErr)
+      window.removeEventListener('unhandledrejection', catchErr)
+    }
+  }, [])
 
   useEffect(()=>{
     messageApi.destroy()
@@ -30,7 +69,10 @@ const App = memo(() => {
   return (
     <>
       {
-        contextHolder
+        msgContextHolder
+      }
+      {
+        errContextHolder
       }
       {
         useRoutes(routes)

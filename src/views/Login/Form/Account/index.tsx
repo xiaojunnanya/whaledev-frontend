@@ -1,20 +1,30 @@
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 import { LockOutlined, MailOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { changeMode } from '@/store/modules/login';
 import { useDispatch } from 'react-redux';
+import { checkCodeServer } from '@/service/modules/login';
 
 export default memo(() => {
 
   const dispatch = useDispatch()
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const [ codeImg, setCodeImg ] = useState<string>('')
+
+  useEffect(()=>{
+    updateCode()
+  }, [])
+
+  const onFinish = (values: any) =>{
+    console.log(values)
+  }
+
+  const updateCode = () =>{
+    setCodeImg(checkCodeServer(new Date().getTime()))
   }
 
   const getEmailCode = () =>{}
-  const updateCode = () =>{}
 
   const aClick = (e: any, index: number)=>{
     e.stopPropagation()
@@ -30,7 +40,7 @@ export default memo(() => {
               rules={[
                 { required: true, message: '请输入邮箱' },
                 {
-                    validator(rule, value, callback) {
+                    validator(_, value, callback) {
                       // 必须既有数字也有字母
                       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                           callback('请输入合法的邮箱格式');
@@ -58,7 +68,7 @@ export default memo(() => {
                 { required: true, message: '请输入密码' },
                 { min: 8, max: 18, message: '密码长度不能小于8位且不能超过18位'},
                 {
-                  validator(rule, value, callback) {
+                  validator(_, value, callback) {
                     // 正则：必须既有数字也有字母
                     if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/.test(value)) {
                       callback('密码必须要由数字和字母组成');
@@ -75,7 +85,7 @@ export default memo(() => {
               rules={[
                 { required: true, message: '请输入密码' },
                 ({getFieldValue})=>({
-                    validator(rule,value){
+                    validator(_,value){
                         if(!value || getFieldValue('password') === value){
                             return Promise.resolve()
                         }
@@ -92,7 +102,7 @@ export default memo(() => {
                   <Input prefix={<SafetyCertificateOutlined className="site-form-item-icon" />} placeholder="请输入验证码" />
               </Form.Item>
               <div onClick={updateCode}>
-                  <img src='' alt="验证码"/>
+                  <img src={codeImg} alt="验证码"/>
               </div>
           </div>
 

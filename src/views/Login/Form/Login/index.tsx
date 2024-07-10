@@ -1,18 +1,26 @@
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { useAppDispatch } from '@/store';
 import { changeMode } from '@/store/modules/login';
+import { checkCodeServer } from '@/service/modules/login';
 
 export default memo(() => {
   const dispatch = useAppDispatch()
+  const [ codeImg, setCodeImg ] = useState<string>('')
+
+  useEffect(()=>{
+    updateCode()
+  }, [])
 
   const onFinish = (values: any) =>{
     console.log(values)
   }
 
-  const updateCode = () =>{}
+  const updateCode = () =>{
+    setCodeImg(checkCodeServer(new Date().getTime()))
+  }
 
   const aClick = (e: any, index: number)=>{
     e.stopPropagation()
@@ -43,7 +51,7 @@ export default memo(() => {
                   placeholder="请输入验证码"/>
               </Form.Item>
               <div onClick={updateCode}>
-                  <img src='' alt="验证码"/>
+                  <img src={codeImg} alt="验证码"/>
               </div>
           </div>
 

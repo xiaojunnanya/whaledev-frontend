@@ -28,7 +28,7 @@ export const LoginStyled = styled.div`
                 display: flex;
 
                 .ant-form-item{
-                    width: 230px;
+                    width: 260px;
                 }
 
                 img{
