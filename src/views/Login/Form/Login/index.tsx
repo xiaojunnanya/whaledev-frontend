@@ -4,22 +4,32 @@ import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-desi
 import { Button, Form, Input } from 'antd';
 import { useAppDispatch } from '@/store';
 import { changeMode } from '@/store/modules/login';
-import { checkCodeServer } from '@/service/modules/login';
+import { checkCodeServer, login } from '@/service/modules/login';
+import { changeGlobalMessage } from '@/store/modules/global';
 
 export default memo(() => {
   const dispatch = useAppDispatch()
+  const [form] = Form.useForm();
   const [ codeImg, setCodeImg ] = useState<string>('')
 
   useEffect(()=>{
     updateCode()
   }, [])
 
-  const onFinish = (values: any) =>{
+  const onFinish = async (values: any) =>{
     console.log(values)
+    const { data } = await login(values.username, values.password, values.checkCode)
+    console.log(data);
+    
+    if(data.statusCode === 1000){
+      dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+      updateCode()
+      form.resetFields(['checkCode'])
+    }
   }
 
   const updateCode = () =>{
-    setCodeImg(checkCodeServer(new Date().getTime()))
+    setCodeImg(checkCodeServer())
   }
 
   const aClick = (e: any, index: number)=>{
@@ -34,7 +44,7 @@ export default memo(() => {
 
   return (
     <>
-      <Form name="normal_login" className="login-form" onFinish={onFinish}>
+      <Form name="normal_login" className="login-form" onFinish={onFinish} form={form}>
           <Form.Item name="username"
               rules={[{ required: true, message: '请输入邮箱' }]} >
               <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="请输入邮箱" />

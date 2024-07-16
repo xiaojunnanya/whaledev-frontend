@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 
-import { LockOutlined, MailOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { changeMode } from '@/store/modules/login';
 import { useDispatch } from 'react-redux';
@@ -21,7 +21,7 @@ export default memo(() => {
   }
 
   const updateCode = () =>{
-    setCodeImg(checkCodeServer(new Date().getTime()))
+    setCodeImg(checkCodeServer())
   }
 
   const getEmailCode = () =>{}
@@ -59,10 +59,10 @@ export default memo(() => {
               </Form.Item>
               <Button type='primary' onClick={getEmailCode}>获取验证码</Button>
           </div>
-          <Form.Item name="name"
+          {/* <Form.Item name="name"
               rules={[{ required: true, message: '请输入昵称' }]} >
               <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="请输入昵称" />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item name="password"
               rules={[
                 { required: true, message: '请输入密码' },

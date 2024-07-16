@@ -20,7 +20,7 @@ export default memo(() => {
   }
 
   const updateCode = () =>{
-    setCodeImg(checkCodeServer(new Date().getTime()))
+    setCodeImg(checkCodeServer())
   }
 
   const getEmailCode = () =>{

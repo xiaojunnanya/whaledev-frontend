@@ -20,7 +20,7 @@ class WhaleRequest{
 
         // 响应拦截器
         this.instance.interceptors.response.use((res)=>{
-            return res.data
+            return res
         },(error) =>{
             Promise.reject(error)
         })
