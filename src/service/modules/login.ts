@@ -22,15 +22,45 @@ export const checkCodeServer = () =>{
 
 
 /**
- * 
+ * 登录
  * @param email 邮箱
  * @param password 密码
  * @param code 验证码
  * @returns 
  */
-export const login = (email: string, password: string, checkCode: string) =>{
+export const login = (args: any) =>{
     return whaleReq.post({
         url: '/login/login',
-        data: { email, password, checkCode }
+        data: {
+            ...args
+        }
+    })
+}
+
+/**
+ * 注册
+ * @param args 
+ * @returns 
+ */
+export const register = (args: any) =>{
+    return whaleReq.post({
+        url: '/login/register',
+        data: { 
+            ...args
+        }
+    })
+}
+
+/**
+ * 忘记密码
+ * @param args 
+ * @returns 
+ */
+export const resetPassword = (args: any) =>{
+    return whaleReq.post({
+        url: '/login/resetPassword',
+        data: { 
+            ...args
+        }
     })
 }

@@ -3,7 +3,7 @@ import { memo } from 'react'
 import { LoginStyled } from './style'
 
 import LoginModel from './Form/Login'
-import AccountModel from './Form/Account'
+import AccountModel from './Form/Register'
 import ForgetModel from './Form/Forget'
 
 import { useAppSelector, useAppShallowEqual } from '@/store'

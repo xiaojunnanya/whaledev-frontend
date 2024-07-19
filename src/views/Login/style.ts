@@ -52,21 +52,6 @@ export const LoginStyled = styled.div`
                     margin-left: 10px;
                 }
             }
-
-            .qqimg{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                
-                span{
-                    margin-right: 6px;
-                    color:#636D7E;
-                }
-                img{
-                    width: 20px;
-                }
-            }
         }
 
 

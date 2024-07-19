@@ -6,22 +6,29 @@ import { useAppDispatch } from '@/store';
 import { changeMode } from '@/store/modules/login';
 import { checkCodeServer, login } from '@/service/modules/login';
 import { changeGlobalMessage } from '@/store/modules/global';
+import { useNavigate } from 'react-router-dom';
+import SparkMD5 from 'spark-md5';
 
 export default memo(() => {
   const dispatch = useAppDispatch()
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
   const [ codeImg, setCodeImg ] = useState<string>('')
-
+  const naviage = useNavigate()
+  
   useEffect(()=>{
     updateCode()
   }, [])
 
   const onFinish = async (values: any) =>{
-    console.log(values)
-    const { data } = await login(values.username, values.password, values.checkCode)
-    console.log(data);
+    const spark = new SparkMD5()
+    spark.append(values.password)
+    const password = spark.end()
+    values.password = password
+    const { data } = await login(values)
     
-    if(data.statusCode === 1000){
+    if(data.statusCode === 1200){
+      dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+    }else{
       dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
       updateCode()
       form.resetFields(['checkCode'])
@@ -44,8 +51,10 @@ export default memo(() => {
 
   return (
     <>
-      <Form name="normal_login" className="login-form" onFinish={onFinish} form={form}>
-          <Form.Item name="username"
+      <Form name="normal_login" className="login-form" onFinish={onFinish} form={form}
+      initialValues={{email: '2376974436@qq.com', password: 'qwer12345', checkCode: ''}}
+      >
+          <Form.Item name="email"
               rules={[{ required: true, message: '请输入邮箱' }]} >
               <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="请输入邮箱" />
           </Form.Item>
@@ -72,6 +81,11 @@ export default memo(() => {
 
           <Form.Item>
               <Button type="primary" htmlType="submit" className="login-form-button"> 登录 </Button>
+              <Button 
+                className="login-form-button" 
+                style={{marginTop:'20px'}}
+                onClick={()=>{naviage('/')}}
+              > 返回首页 </Button>
           </Form.Item>
           
           {/* <div className='qqimg'>
