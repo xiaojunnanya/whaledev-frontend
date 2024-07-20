@@ -3,20 +3,30 @@ import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-desi
 import { Button, Form, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { changeMode } from '@/store/modules/login';
-import { checkCodeServer, sendEmail } from '@/service/modules/login';
+import { checkCodeServer, resetPassword, sendEmail } from '@/service/modules/login';
+import { changeGlobalMessage } from '@/store/modules/global';
 
 export default memo(() => {
   const [form] = Form.useForm();
   const dispatch = useDispatch()
-
+  const [ btnName, setBtnName ] = useState<string>('获取验证码')
   const [ codeImg, setCodeImg ] = useState<string>('')
 
   useEffect(()=>{
     updateCode()
   }, [])
 
-  const onFinish = (values: any) =>{
-    console.log(values)
+  const onFinish = async (values: any) =>{
+    const { data } = await resetPassword(values)
+
+    if(data.statusCode === 1200){
+      dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+      dispatch(changeMode('login'))
+    }else{
+      dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+      updateCode()
+      form.resetFields(['checkCode'])
+    }
   }
 
   const updateCode = () =>{
@@ -24,12 +34,36 @@ export default memo(() => {
   }
 
   const getEmailCode = () =>{
-    form.validateFields(['username']).then(async ({ username }: { username: string }) =>{
-        const res = await sendEmail(username, 'register')
-        console.log(res);
-        
+    form.validateFields(['email']).then(async ({ email }: { email: string }) =>{
+      if( btnName !== '获取验证码') return
+      
+      downTime()
+
+      
+      const { data } = await sendEmail(email, 'register')
+      if(data.statusCode === 1200){
+        dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+      }else{
+        dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+      }
+
     })
+  }
+
+
+  const downTime = () =>{
+    let time = 60
     
+    const fn = () =>{
+      time--;
+      setBtnName(time + '秒后重新获取')
+      if(time === 0) {
+        setBtnName('获取验证码')
+        clearInterval(a)
+      }
+    }
+    fn()
+    let a = setInterval(fn, 1000)
   }
 
   const aClick = (e: any, index: number)=>{
@@ -43,7 +77,7 @@ export default memo(() => {
   return (
     <>
       <Form name="normal_login" className="login-form" onFinish={onFinish} form={form}>
-          <Form.Item name="username"
+          <Form.Item name="email"
               rules={[
                 { required: true, message: '请输入邮箱' },
                 {
@@ -64,7 +98,7 @@ export default memo(() => {
                   rules={[{ required: true, message: '请输入邮箱验证码' }]} >
                   <Input prefix={<SafetyCertificateOutlined className="site-form-item-icon" />} placeholder="请邮箱验证码" />
               </Form.Item>
-              <Button type='primary' onClick={getEmailCode}>获取验证码</Button>
+              <Button type='primary' onClick={getEmailCode}>{ btnName }</Button>
           </div>
           <Form.Item name="password"
               rules={[
@@ -84,7 +118,7 @@ export default memo(() => {
               <Input  prefix={<LockOutlined className="site-form-item-icon" />}
               type="password" placeholder="请输入密码" />
           </Form.Item>
-          <Form.Item name="passwordTwo"
+          <Form.Item name="passwordConfirm"
               rules={[
                 { required: true, message: '请输入密码' },
                 ({getFieldValue})=>({
