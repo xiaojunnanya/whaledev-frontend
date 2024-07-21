@@ -27,7 +27,8 @@ export default memo(() => {
     const { data } = await login(values)
     
     if(data.statusCode === 1200){
-      dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+      dispatch(changeGlobalMessage({ type:'success', message: data?.data.msg}))
+      localStorage.setItem('token', data?.data.token)
     }else{
       dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
       updateCode()
@@ -52,7 +53,7 @@ export default memo(() => {
   return (
     <>
       <Form name="normal_login" className="login-form" onFinish={onFinish} form={form}
-      initialValues={{email: '2376974436@qq.com', password: 'qwer12345', checkCode: ''}}
+      initialValues={{email: '2376974436@qq.com', password: 'qwer1234', checkCode: ''}}
       >
           <Form.Item name="email"
               rules={[{ required: true, message: '请输入邮箱' }]} >
@@ -60,7 +61,7 @@ export default memo(() => {
           </Form.Item>
           <Form.Item name="password"
               rules={[{ required: true, message: '请输入密码' }]} >
-              <Input  prefix={<LockOutlined className="site-form-item-icon" />}
+              <Input prefix={<LockOutlined className="site-form-item-icon" />}
               type="password" placeholder="请输入密码" />
           </Form.Item>
           <div className='checkCode'>
