@@ -15,6 +15,7 @@ export const HeaderStyle = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
 
         h1{
             font-size: 20px;

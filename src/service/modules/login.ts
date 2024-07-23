@@ -8,7 +8,7 @@ import { whaleReq } from "..";
  */
 export const sendEmail = (email: string, type: 'login' | 'register' | 'reset_password') =>{
     return whaleReq.post({
-        url: '/sendEmail',
+        url: '/auth/emailcode',
         data:{ email, type }
     })
 }
@@ -17,7 +17,7 @@ export const sendEmail = (email: string, type: 'login' | 'register' | 'reset_pas
 // 图形验证码
 export const checkCodeServer = () =>{
     const time = new Date().getTime()
-    return `/api/sendEmail/imgcode?time=${time}`
+    return `/api/auth/imgcode?time=${time}`
 }
 
 
@@ -30,7 +30,7 @@ export const checkCodeServer = () =>{
  */
 export const login = (args: any) =>{
     return whaleReq.post({
-        url: '/login/login',
+        url: '/auth/login',
         data: {
             ...args
         }
@@ -44,7 +44,7 @@ export const login = (args: any) =>{
  */
 export const register = (args: any) =>{
     return whaleReq.post({
-        url: '/login/register',
+        url: '/auth/register',
         data: { 
             ...args
         }
@@ -58,7 +58,7 @@ export const register = (args: any) =>{
  */
 export const resetPassword = (args: any) =>{
     return whaleReq.post({
-        url: '/login/resetPassword',
+        url: '/auth/resetPassword',
         data: { 
             ...args
         }

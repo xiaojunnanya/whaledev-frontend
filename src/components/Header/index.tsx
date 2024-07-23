@@ -39,7 +39,7 @@ export default memo(() => {
   
   return (
     <HeaderStyle>
-        <div className='logo'>
+        <div className='logo' onClick={()=>{naviage('/')}}>
             <img src={logo} alt="鲸灵开发" />
             <h1>鲸灵开发</h1>
         </div>
