@@ -1,12 +1,27 @@
-import { memo, useEffect } from 'react'
-import { useRoutes } from 'react-router-dom'
+import { memo, useEffect, useState } from 'react'
+import { useLocation, useRoutes } from 'react-router-dom'
 import routes from './router'
 import { message, notification } from 'antd'
 import { useAppSelector, useAppShallowEqual } from './store'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 const App = memo(() => {
   const [ messageApi, msgContextHolder ] = message.useMessage()
-  const [ errorApi, errContextHolder ] = notification.useNotification();
+  const [ errorApi, errContextHolder ] = notification.useNotification()
+
+  const { pathname } = useLocation()
+  const [ showHeader, setShowHeader ] = useState<boolean>(true)
+
+
+  useEffect(()=>{
+    if(pathname === '/login'){
+      setShowHeader(false)
+    }else{
+      setShowHeader(true)
+    }
+  }, [pathname])
+  
 
   const { mess } = useAppSelector((state)=>{
     return {
@@ -42,7 +57,7 @@ const App = memo(() => {
     }
     
     // 除了弹窗提示，也需要上报：采用上传gif
-    // errorApi.error(notificationMessage)
+    errorApi.error(notificationMessage)
   }
 
   useEffect(()=>{
@@ -72,6 +87,14 @@ const App = memo(() => {
   return (
     <>
       {
+        showHeader && (
+          <header>
+            <Header></Header>
+          </header>
+        )
+      }
+      
+      {
         msgContextHolder
       }
       {
@@ -80,6 +103,15 @@ const App = memo(() => {
       {
         useRoutes(routes)
       }
+      
+      {
+        pathname === '/' && (
+          <footer>
+            <Footer></Footer>
+          </footer>
+        )
+      }
+      
     </>
   )
 })

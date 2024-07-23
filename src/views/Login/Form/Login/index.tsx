@@ -29,6 +29,7 @@ export default memo(() => {
     if(data.statusCode === 1200){
       dispatch(changeGlobalMessage({ type:'success', message: data?.data.msg}))
       localStorage.setItem('token', data?.data.token)
+      naviage('/')
     }else{
       dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
       updateCode()

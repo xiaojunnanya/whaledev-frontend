@@ -13,6 +13,8 @@ class WhaleRequest{
         // 请求拦截器
         this.instance.interceptors.request.use((config)=>{
             // config.headers['Content-Type'] = config.headers['Content-Type'] || 'application/x-www-form-urlencoded'
+            const token = localStorage.getItem('token')
+            if(token) config.headers['token'] = localStorage.getItem('token')
             return config
         },(error) =>{
             Promise.reject(error)
