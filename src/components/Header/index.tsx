@@ -3,7 +3,8 @@ import { HeaderStyle } from './style'
 import logo from '@/assets/images/favicon.ico'
 import { Avatar, Button, Dropdown, MenuProps } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { getAvatarImage, getUserInfo } from '@/service/modules/user'
+import { getUserInfo } from '@/service/modules/user'
+import { getImageShow } from '@/service/modules/common'
 
 export default memo(() => {
   const token = localStorage.getItem('token')
@@ -31,7 +32,7 @@ export default memo(() => {
       let info = data.data
       info = {
         ...info,
-        avatar: getAvatarImage(info.avatar)
+        avatar: getImageShow(info.avatar)
       }
       setUserInfo(info)
     })

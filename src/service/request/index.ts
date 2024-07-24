@@ -56,6 +56,10 @@ class WhaleRequest{
     post<T=any>(config: WhaleRequestConfig){
         return this.request<T>({...config, method:'POST'})
     }
+
+    delete<T=any>(config: WhaleRequestConfig){
+        return this.request<T>({...config, method:'delete'})
+    }
 }
 
 export default WhaleRequest
