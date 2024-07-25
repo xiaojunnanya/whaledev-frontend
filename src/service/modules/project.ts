@@ -19,7 +19,25 @@ export const createProject = (args: any) =>{
  * 获取项目
  * @returns 
  */
-export const getProject = (page: number) => whaleReq.get({ url: `/project/get/${page}`});
+// export const getProject = (page: number) => whaleReq.get({ url: `/project/get/${page}`});
+
+/**
+ * 获取项目
+ * @param page 
+ * @param projectName 
+ * @returns 
+ */
+export const getProject = (page: number, projectName: string | undefined) =>{
+    return whaleReq.post({
+        url: '/project/search',
+        data:{
+            page,
+            projectName: projectName || '',
+            pageSize: 8
+        }
+    })
+}
+
 
 /**
  * 删除项目
@@ -40,10 +58,4 @@ export const updateProject = (args: any) =>{
             projectIcon:'/projectIcon/default-avatar.jpg'
         }
     })
-}
-
-
-// 搜索项目
-export const searchProject = (projectName: string) => {
-    return whaleReq.get({ url: '/project/search/' + projectName });
 }

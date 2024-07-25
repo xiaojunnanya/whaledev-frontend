@@ -4,7 +4,7 @@ import { ProjectCollectionStyled } from './style'
 import { Avatar, Button, Card, Col, ConfigProvider, Form, Input, Modal, Pagination, Popconfirm, Radio, Row, Select, Tag } from 'antd'
 import type { PaginationProps } from 'antd'
 import { CopyOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
-import { createProject, deleteProject, getProject, searchProject, updateProject } from '@/service/modules/project';
+import { createProject, deleteProject, getProject, updateProject } from '@/service/modules/project';
 import { useAppDispatch } from '@/store';
 import { changeGlobalMessage } from '@/store/modules/global';
 import { getImageShow } from '@/service/modules/common'
@@ -53,9 +53,8 @@ interface projectDataType extends FieldType{
   projectIcon:string,
 }
 
-// 搜索防抖+分页：一页八个数据，然后设置滚轮区域
+// 搜索防抖
 // 对于类型和状态调用要用一个接口来弄，不要在前端写死
-// 考虑loading加载是否需要，感觉在做分页的时候还是需要的
 export default memo(() => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [ modalType, setModalType ] = useState<'create' | 'edit'>('create')
@@ -64,19 +63,20 @@ export default memo(() => {
   const [ listData, setListData ] = useState<projectDataType[]>([])
   const [ searchValue, setSearchValue ] = useState('')
   const [ editId, setEditId ] = useState<number>(-1)
+  const [ cardLoading, setCardLoading ] = useState(false)
   // 总数
   const [ totalPage, setTotalPage ] = useState(0)
   // 当前位置
   const [ currentPage, setCurrentPage ] = useState(1)
-
 
   useEffect(()=>{
     getAllProjects(1)
   }, [])
 
 
-  const getAllProjects = async (page: number) => {
-    const { data } = await getProject(page)
+  const getAllProjects = async (page: number, projectName?: string) => {
+    setCardLoading(true)
+    const { data } = await getProject(page, projectName)
     setListData(data.data)
     setTotalPage(data.total)
     setCurrentPage(data.page)
@@ -85,6 +85,8 @@ export default memo(() => {
     if( data.data.length === 0 && page > 1 ){
       getAllProjects(data.page - 1)
     }
+
+    setCardLoading(false)
   }
 
   const onOk = () => {
@@ -96,7 +98,7 @@ export default memo(() => {
       })
 
       if(data.statusCode === 1200){
-        getAllProjects(1)
+        getAllProjects(modalType === 'create' ? 1 : currentPage)
         dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
         setIsModalOpen(false)
         form.resetFields()
@@ -126,13 +128,7 @@ export default memo(() => {
   const searchChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     setSearchValue(value)
-    if(!value){
-      // 这里待定，等搜索的分页做出来
-      getAllProjects(1)
-    }else{
-      const { data } = await searchProject(value)
-      setListData(data.data)
-    }
+    getAllProjects(1, value)
   }
 
   const editModal = (e: any, item: any) => {
@@ -236,6 +232,7 @@ export default memo(() => {
                     ]}
                     hoverable
                     onClick={clickCard}
+                    loading={cardLoading}
                   >
                     <Meta
                       avatar={<Avatar src={getImageShow(item.projectIcon)} />}
@@ -263,7 +260,7 @@ export default memo(() => {
 
       <div className='bottom'>
         <ConfigProvider locale={zhCN}>
-          <Pagination showQuickJumper defaultCurrent={currentPage} 
+          <Pagination showQuickJumper current={currentPage} 
           defaultPageSize={8} total={totalPage} showSizeChanger={false}
           onChange={pageChange}/>
         </ConfigProvider>
