@@ -1,21 +1,18 @@
 import { memo, useEffect, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { ProjectCollectionStyled } from './style'
-import { Avatar, Button, Card, Col, Form, Input, Modal, Popconfirm, Radio, Row, Select, Tag } from 'antd'
+import { Avatar, Button, Card, Col, ConfigProvider, Form, Input, Modal, Pagination, Popconfirm, Radio, Row, Select, Tag } from 'antd'
+import type { PaginationProps } from 'antd'
 import { CopyOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
-import { createProject, deleteProject, getProject, updateProject } from '@/service/modules/project';
+import { createProject, deleteProject, getProject, searchProject, updateProject } from '@/service/modules/project';
 import { useAppDispatch } from '@/store';
 import { changeGlobalMessage } from '@/store/modules/global';
 import { getImageShow } from '@/service/modules/common'
+import zhCN from 'antd/es/locale/zh_CN';
 
 const { Meta } = Card;
 const { Option } = Select
 
-enum projectTypeType {
-  one,
-  two,
-  other,
-}
 const typeTextMap = {
   one: '类型一',
   two: '类型二',
@@ -56,37 +53,38 @@ interface projectDataType extends FieldType{
   projectIcon:string,
 }
 
-
+// 搜索防抖+分页：一页八个数据，然后设置滚轮区域
+// 对于类型和状态调用要用一个接口来弄，不要在前端写死
+// 考虑loading加载是否需要，感觉在做分页的时候还是需要的
 export default memo(() => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [ modalType, setModalType ] = useState<'create' | 'edit'>('create')
   const [form] = Form.useForm()
   const dispatch = useAppDispatch()
-  const [ listData, setListData ] = useState<projectDataType[]>([
-    {
-      id: 1,
-      projectId: '001',
-      projectIcon: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-      projectName: '项目1',
-      projectDesc: '项目1描述',
-      projectType: '项目类型1',
-      projectState: projectStateType.inProgress
-    }
-  ])
+  const [ listData, setListData ] = useState<projectDataType[]>([])
   const [ searchValue, setSearchValue ] = useState('')
   const [ editId, setEditId ] = useState<number>(-1)
-  const [ loadingData, setLoadingData ] = useState(true)
+  // 总数
+  const [ totalPage, setTotalPage ] = useState(0)
+  // 当前位置
+  const [ currentPage, setCurrentPage ] = useState(1)
 
 
   useEffect(()=>{
-    getAllProjects()
+    getAllProjects(1)
   }, [])
 
 
-  const getAllProjects = async () => {
-    const { data } = await getProject()
+  const getAllProjects = async (page: number) => {
+    const { data } = await getProject(page)
     setListData(data.data)
-    setLoadingData(false)
+    setTotalPage(data.total)
+    setCurrentPage(data.page)
+
+    // 当前页最后一个删除的时候跳转到前一页
+    if( data.data.length === 0 && page > 1 ){
+      getAllProjects(data.page - 1)
+    }
   }
 
   const onOk = () => {
@@ -98,7 +96,7 @@ export default memo(() => {
       })
 
       if(data.statusCode === 1200){
-        getAllProjects()
+        getAllProjects(1)
         dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
         setIsModalOpen(false)
         form.resetFields()
@@ -113,29 +111,46 @@ export default memo(() => {
     form.resetFields()
   }
 
-  const deleteOneProject = async (id: number) =>{
-    
+  const deleteOneProject = async (e: any, id: number) =>{
+    e.stopPropagation()
     const { data } =  await deleteProject(id)
 
     if(data.statusCode === 1200){
-      getAllProjects()
+      getAllProjects(currentPage)
       dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
     }else{
       dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
     }
   }
 
-  const searchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value)
-    console.log(e.target.value)
+  const searchChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setSearchValue(value)
+    if(!value){
+      // 这里待定，等搜索的分页做出来
+      getAllProjects(1)
+    }else{
+      const { data } = await searchProject(value)
+      setListData(data.data)
+    }
   }
 
-  const editModal = (e: any) => {
+  const editModal = (e: any, item: any) => {
+    e.stopPropagation()
+    
     setModalType('edit')
-    form.setFieldsValue(e)
-    setEditId(e.id)
+    form.setFieldsValue(item)
+    setEditId(item.id)
     setIsModalOpen(true)
   }
+
+  const clickCard = () =>{
+    console.log('123');
+  }
+
+  const pageChange: PaginationProps['onShowSizeChange'] = (current, _) => {
+    getAllProjects(current)
+  };
 
   return (
     <ProjectCollectionStyled>
@@ -156,7 +171,7 @@ export default memo(() => {
             label="应用描述"
             name="projectDesc"
           >
-            <Input.TextArea maxLength={100} showCount/>
+            <Input.TextArea maxLength={99} showCount style={{height:'100px'}}/>
           </Form.Item>
 
           <Form.Item<FieldType>
@@ -167,7 +182,7 @@ export default memo(() => {
             <Select placeholder="请选择应用类型">
               {
                 typeData.map(item =>{
-                  return <Option value={item}>{typeTextMap[item as keyof typeof typeTextMap]}</Option>
+                  return <Option value={item} key={item}>{typeTextMap[item as keyof typeof typeTextMap]}</Option>
                 })
               }
             </Select>
@@ -179,7 +194,7 @@ export default memo(() => {
                 <Radio.Group>
                   {
                     stateData.map(item =>{
-                      return <Radio.Button value={item}>{stateTextMap[item as keyof typeof stateTextMap]}</Radio.Button>
+                      return <Radio.Button value={item} key={item}>{stateTextMap[item as keyof typeof stateTextMap]}</Radio.Button>
                     })
                   }
                 </Radio.Group>
@@ -206,20 +221,21 @@ export default memo(() => {
                 <Col span={6} key={item.id}>
                   <Card
                     actions={[
-                      <CopyOutlined key="copy" />,
-                      <EditOutlined key="edit" onClick={ ()=> {editModal(item)} } />,
+                      <CopyOutlined key="copy" onClick={ (e)=> {e.stopPropagation()} }/>,
+                      <EditOutlined key="edit" onClick={ (e)=> {editModal(e, item)} } />,
                       <Popconfirm
                         title="提示"
                         description="确定要删除该项目吗"
-                        onConfirm={()=>{deleteOneProject(item.id)}}
+                        onConfirm={(e)=>{deleteOneProject(e, item.id)}}
+                        onCancel={ (e)=> {e?.stopPropagation()} }
                         okText="确定"
                         cancelText="取消"
                       >
-                        <DeleteOutlined key="delete"/>
+                        <DeleteOutlined key="delete" onClick={ (e)=> {e.stopPropagation()} }/>
                       </Popconfirm>,
                     ]}
                     hoverable
-                    loading={loadingData}
+                    onClick={clickCard}
                   >
                     <Meta
                       avatar={<Avatar src={getImageShow(item.projectIcon)} />}
@@ -243,6 +259,14 @@ export default memo(() => {
           }
         </Row>
         
+      </div>
+
+      <div className='bottom'>
+        <ConfigProvider locale={zhCN}>
+          <Pagination showQuickJumper defaultCurrent={currentPage} 
+          defaultPageSize={8} total={totalPage} showSizeChanger={false}
+          onChange={pageChange}/>
+        </ConfigProvider>
       </div>
     </ProjectCollectionStyled>
   )

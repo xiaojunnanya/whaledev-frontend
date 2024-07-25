@@ -19,7 +19,7 @@ export const createProject = (args: any) =>{
  * 获取项目
  * @returns 
  */
-export const getProject = () => whaleReq.get({ url: '/project/get'});
+export const getProject = (page: number) => whaleReq.get({ url: `/project/get/${page}`});
 
 /**
  * 删除项目
@@ -40,4 +40,10 @@ export const updateProject = (args: any) =>{
             projectIcon:'/projectIcon/default-avatar.jpg'
         }
     })
+}
+
+
+// 搜索项目
+export const searchProject = (projectName: string) => {
+    return whaleReq.get({ url: '/project/search/' + projectName });
 }

@@ -1,13 +1,10 @@
 import styled from "styled-components";
 
 export const ProjectCollectionStyled = styled.div`
-    margin: 15px 30px;
-
-
     .top{
         display: flex;
         justify-content: space-between;
-
+        margin: 15px 30px;
 
         .ant-input-outlined{
             width: 200px;
@@ -15,8 +12,10 @@ export const ProjectCollectionStyled = styled.div`
     }
 
     .content{
-        margin-top: 20px;
-
+        padding: 10px 30px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(100vh - 60px - 62px - 20px - 72px);
 
         .otherinfo{
             .typestate{
@@ -32,5 +31,17 @@ export const ProjectCollectionStyled = styled.div`
                 }
             }
         }
+
+        .ant-pagination{
+            display:flex;
+            justify-content: flex-end;
+            margin: 20px;
+        }
+    }
+
+    .bottom{
+        display: flex;
+        justify-content: flex-end;
+        margin: 20px;
     }
 `
