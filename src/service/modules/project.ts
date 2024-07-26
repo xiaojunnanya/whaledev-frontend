@@ -60,6 +60,12 @@ export const updateProject = (args: any) =>{
     })
 }
 
+/**
+ * 获取项目详细信息
+ * @param id 
+ * @returns 
+ */
+export const getProjectDetail = (id: string) => whaleReq.get({ url: `/project/info/${id}` });
 
 
 /**

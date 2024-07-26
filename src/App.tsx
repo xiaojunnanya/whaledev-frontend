@@ -1,8 +1,9 @@
 import { memo, useEffect, useState } from 'react'
 import { useLocation, useRoutes } from 'react-router-dom'
 import routes from './router'
-import { message, notification } from 'antd'
+import { ConfigProvider, message, notification } from 'antd'
 import { useAppSelector, useAppShallowEqual } from './store'
+import zhCN from 'antd/es/locale/zh_CN';
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -100,9 +101,14 @@ const App = memo(() => {
       {
         errContextHolder
       }
-      {
-        useRoutes(routes)
-      }
+
+      
+      <ConfigProvider locale={zhCN}>
+        {
+          useRoutes(routes)
+        }
+      </ConfigProvider>
+      
       
       {
         pathname === '/' && (

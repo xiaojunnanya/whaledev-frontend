@@ -4,9 +4,9 @@ export const HeaderStyle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 48px;
 
-    background-color: #fff;
+    background-color: #4CABE4;
     padding: 0 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 

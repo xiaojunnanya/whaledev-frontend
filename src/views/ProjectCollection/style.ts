@@ -15,7 +15,7 @@ export const ProjectCollectionStyled = styled.div`
         padding: 10px 30px;
         overflow-y: auto;
         overflow-x: hidden;
-        height: calc(100vh - 60px - 62px - 20px - 72px);
+        height: calc(100vh - 48px - 62px - 20px - 72px);
 
         .otherinfo{
             .typestate{

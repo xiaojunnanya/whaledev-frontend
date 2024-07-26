@@ -1,14 +1,14 @@
 import { memo, useEffect, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { ProjectCollectionStyled } from './style'
-import { Avatar, Button, Card, Col, ConfigProvider, Form, Input, Modal, Pagination, Popconfirm, Radio, Row, Select, Tag } from 'antd'
+import { Avatar, Button, Card, Col, Form, Input, Modal, Pagination, Popconfirm, Radio, Row, Select, Tag } from 'antd'
 import type { PaginationProps } from 'antd'
 import { CopyOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
 import { createProject, deleteProject, getProject, getProjectState, getProjectStateColor, getProjectType, updateProject } from '@/service/modules/project';
 import { useAppDispatch } from '@/store';
 import { changeGlobalMessage } from '@/store/modules/global';
 import { getImageShow } from '@/service/modules/common'
-import zhCN from 'antd/es/locale/zh_CN';
+import { useNavigate } from 'react-router-dom'
 
 const { Meta } = Card;
 const { Option } = Select
@@ -30,6 +30,7 @@ interface projectDataType extends FieldType{
 export default memo(() => {
   const [form] = Form.useForm()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -160,8 +161,9 @@ export default memo(() => {
     setIsModalOpen(true)
   }
 
-  const clickCard = () =>{
-    console.log('123');
+  const goProjectDetail = (projectId: string) =>{
+    console.log(projectId)
+    navigate(`/project/${projectId}/rapid`)
   }
 
   const pageChange: PaginationProps['onShowSizeChange'] = (current, _) => {
@@ -251,7 +253,7 @@ export default memo(() => {
                       </Popconfirm>,
                     ]}
                     hoverable
-                    onClick={clickCard}
+                    onClick={() =>{ goProjectDetail(item.projectId)}}
                     loading={cardLoading}
                   >
                     <Meta
@@ -277,11 +279,9 @@ export default memo(() => {
       </div>
 
       <div className='bottom'>
-        <ConfigProvider locale={zhCN}>
-          <Pagination showQuickJumper current={pageConfig.current} 
-          defaultPageSize={8} total={pageConfig.total} showSizeChanger={false}
-          onChange={pageChange}/>
-        </ConfigProvider>
+        <Pagination showQuickJumper current={pageConfig.current} 
+        defaultPageSize={8} total={pageConfig.total} showSizeChanger={false}
+        onChange={pageChange}/>
       </div>
     </ProjectCollectionStyled>
   )

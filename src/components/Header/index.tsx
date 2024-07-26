@@ -48,7 +48,7 @@ export default memo(() => {
             {
               token ? (
                 <Dropdown menu={{ items }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
-                  <Avatar size={52}  src={userInfo.avatar} alt={userInfo.username}/>
+                  <Avatar size={45}  src={userInfo.avatar} alt={userInfo.username}/>
                 </Dropdown>
               ) : <Button type='primary' onClick={()=>{naviage('/login')}}>登录</Button>
             }
