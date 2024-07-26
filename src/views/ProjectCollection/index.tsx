@@ -4,7 +4,7 @@ import { ProjectCollectionStyled } from './style'
 import { Avatar, Button, Card, Col, ConfigProvider, Form, Input, Modal, Pagination, Popconfirm, Radio, Row, Select, Tag } from 'antd'
 import type { PaginationProps } from 'antd'
 import { CopyOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
-import { createProject, deleteProject, getProject, updateProject } from '@/service/modules/project';
+import { createProject, deleteProject, getProject, getProjectState, getProjectStateColor, getProjectType, updateProject } from '@/service/modules/project';
 import { useAppDispatch } from '@/store';
 import { changeGlobalMessage } from '@/store/modules/global';
 import { getImageShow } from '@/service/modules/common'
@@ -13,38 +13,11 @@ import zhCN from 'antd/es/locale/zh_CN';
 const { Meta } = Card;
 const { Option } = Select
 
-const typeTextMap = {
-  one: '类型一',
-  two: '类型二',
-  other: '其他类型',
-}
-const typeData = Object.keys(typeTextMap)
-
-enum projectStateType {
-  inProgress,
-  completed,
-  paused,
-  obsolete
-}
-const stateTextMap = {
-  inProgress: '进行中',
-  completed: '已完成',
-  paused: '已暂停',
-  obsolete: '已废弃'
-}
-const stateTextColor = {
-  inProgress: '#007BFF',
-  completed: '#28A745',
-  paused: '#6C757D',
-  obsolete: '#DC3545'
-}
-const stateData = Object.keys(stateTextMap)
-
 interface FieldType {
   projectName: string;
   projectDesc?: string;
   projectType: string;
-  projectState: projectStateType
+  projectState: 'inProgress' | 'completed' | 'paused' | 'obsolete'
 };
 
 interface projectDataType extends FieldType{
@@ -54,32 +27,76 @@ interface projectDataType extends FieldType{
 }
 
 // 搜索防抖
-// 对于类型和状态调用要用一个接口来弄，不要在前端写死
 export default memo(() => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [ modalType, setModalType ] = useState<'create' | 'edit'>('create')
   const [form] = Form.useForm()
   const dispatch = useAppDispatch()
+
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [ modalType, setModalType ] = useState<'create' | 'edit'>('create')
   const [ listData, setListData ] = useState<projectDataType[]>([])
   const [ searchValue, setSearchValue ] = useState('')
   const [ editId, setEditId ] = useState<number>(-1)
+  // 卡片加载
   const [ cardLoading, setCardLoading ] = useState(false)
-  // 总数
-  const [ totalPage, setTotalPage ] = useState(0)
-  // 当前位置
-  const [ currentPage, setCurrentPage ] = useState(1)
+  // 分页相关
+  const [ pageConfig, setPageConfig ] = useState({ 
+    total: 0,
+    current: 1
+  })
+
+  // 项目配置相关
+  const [ projectConfig, setProjectConfig ] = useState<any>({
+    projectType: {},
+    projectState: {},
+    projectStateColor: {}
+  })
+
+  const typeData = Object.keys(projectConfig.projectType)
+  const stateData = Object.keys(projectConfig.projectState)
 
   useEffect(()=>{
     getAllProjects(1)
+
+    getConfig()
+
   }, [])
+
+  // 项目配置
+  const getConfig = () =>{
+    const project_type = new Promise((resolve, _)=>{
+      getProjectType().then(res=>{
+        resolve(res.data.data)
+      })
+    })
+
+    const project_state = new Promise((resolve, _)=>{
+      getProjectState().then(res=>{
+        resolve(res.data.data)
+      })
+    })
+
+    const project_state_color = new Promise((resolve, _)=>{
+      getProjectStateColor().then(res=>{
+        resolve(res.data.data)
+      })
+    })
+
+    Promise.all([project_type, project_state, project_state_color]).then(([project_type, project_state, project_state_color])=>{
+      setProjectConfig({
+        projectType: project_type,
+        projectState: project_state,
+        projectStateColor: project_state_color
+      })
+    })
+  }
 
 
   const getAllProjects = async (page: number, projectName?: string) => {
     setCardLoading(true)
     const { data } = await getProject(page, projectName)
     setListData(data.data)
-    setTotalPage(data.total)
-    setCurrentPage(data.page)
+    setPageConfig({ total: data.total, current: data.page })
 
     // 当前页最后一个删除的时候跳转到前一页
     if( data.data.length === 0 && page > 1 ){
@@ -98,7 +115,7 @@ export default memo(() => {
       })
 
       if(data.statusCode === 1200){
-        getAllProjects(modalType === 'create' ? 1 : currentPage)
+        getAllProjects(modalType === 'create' ? 1 : pageConfig.current)
         dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
         setIsModalOpen(false)
         form.resetFields()
@@ -118,7 +135,7 @@ export default memo(() => {
     const { data } =  await deleteProject(id)
 
     if(data.statusCode === 1200){
-      getAllProjects(currentPage)
+      getAllProjects(pageConfig.current)
       dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
     }else{
       dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
@@ -128,7 +145,10 @@ export default memo(() => {
   const searchChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     setSearchValue(value)
+
+    // 对这行做防抖，拿到最新的value和1秒前的value对比，相等调用，不相等重置1秒
     getAllProjects(1, value)
+
   }
 
   const editModal = (e: any, item: any) => {
@@ -178,7 +198,7 @@ export default memo(() => {
             <Select placeholder="请选择应用类型">
               {
                 typeData.map(item =>{
-                  return <Option value={item} key={item}>{typeTextMap[item as keyof typeof typeTextMap]}</Option>
+                  return <Option value={item} key={item}>{projectConfig.projectType[item]}</Option>
                 })
               }
             </Select>
@@ -190,7 +210,7 @@ export default memo(() => {
                 <Radio.Group>
                   {
                     stateData.map(item =>{
-                      return <Radio.Button value={item} key={item}>{stateTextMap[item as keyof typeof stateTextMap]}</Radio.Button>
+                      return <Radio.Button value={item} key={item}>{projectConfig.projectState[item]}</Radio.Button>
                     })
                   }
                 </Radio.Group>
@@ -241,10 +261,8 @@ export default memo(() => {
                         <div className='otherinfo'>
                           <div>{item.projectDesc}</div>
                           <div className='typestate'>
-                            {/* @ts-ignore */}
-                            <span className='type'>{typeTextMap[item.projectType]}</span>
-                            {/* @ts-ignore */}
-                            <Tag color={stateTextColor[item.projectState]}>{stateTextMap[item.projectState]}</Tag>
+                            <span className='type'>{projectConfig.projectType[item.projectType]}</span>
+                            <Tag color={projectConfig.projectStateColor[item.projectState]}>{projectConfig.projectState[item.projectState]}</Tag>
                           </div>
                         </div>
                       }
@@ -260,8 +278,8 @@ export default memo(() => {
 
       <div className='bottom'>
         <ConfigProvider locale={zhCN}>
-          <Pagination showQuickJumper current={currentPage} 
-          defaultPageSize={8} total={totalPage} showSizeChanger={false}
+          <Pagination showQuickJumper current={pageConfig.current} 
+          defaultPageSize={8} total={pageConfig.total} showSizeChanger={false}
           onChange={pageChange}/>
         </ConfigProvider>
       </div>

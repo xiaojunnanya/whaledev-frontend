@@ -59,3 +59,24 @@ export const updateProject = (args: any) =>{
         }
     })
 }
+
+
+
+/**
+ * 项目类型
+ * @returns 
+ */
+export const getProjectType = () => whaleReq.get({ url: '/project/type' });
+
+
+/**
+ * 项目状态
+ * @returns 
+ */
+export const getProjectState = () => whaleReq.get({ url: '/project/state' });
+
+/**
+ * 项目状态颜色
+ */
+
+export const getProjectStateColor = () => whaleReq.get({ url: '/project/stateColor' });
