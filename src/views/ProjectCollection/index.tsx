@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { ProjectCollectionStyled } from './style'
 import { Avatar, Button, Card, Col, Form, Input, Modal, Pagination, Popconfirm, Radio, Row, Select, Tag } from 'antd'
@@ -53,8 +53,8 @@ export default memo(() => {
     projectStateColor: {}
   })
 
-  const typeData = Object.keys(projectConfig.projectType)
-  const stateData = Object.keys(projectConfig.projectState)
+  const typeData = useMemo(()=> Object.keys(projectConfig.projectType), [projectConfig.projectType])
+  const stateData = useMemo(()=> Object.keys(projectConfig.projectState), [projectConfig.projectState])
 
   useEffect(()=>{
     getAllProjects(1)
