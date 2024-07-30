@@ -34,3 +34,6 @@ export const updatePage = (args: any) =>{
 
 // 删除页面
 export const deletePage = (pageId: string) => whaleReq.delete({url:`/pages/${pageId}`})
+
+// 获取页面信息
+export const getPageInfoById = (pageId: string) => whaleReq.get({url: `/pages/info/${pageId}`})

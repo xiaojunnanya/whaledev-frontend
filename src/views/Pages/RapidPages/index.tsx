@@ -55,9 +55,11 @@ const addItems = [
 
 export default memo(() => {
   const params = useParams()
+  const { projectId = '', pageId = '' } = params
+  
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const [ pageActive,  setPageActive ] = useState('')
+  const [ pageActive,  setPageActive ] = useState(pageId)
   const [ modalType, setModalType ] = useState<'create' | 'edit'>('create')
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -66,9 +68,7 @@ export default memo(() => {
   const [ editPage, setEditPage ] = useState<pageDataType>({} as pageDataType)
   const [ deleteModal, contextDeleteHolder ] = Modal.useModal();
 
-  const { projectId } = params
-
-
+  
   useEffect (() => {
     getAllPages()
   }, [])
@@ -115,7 +115,11 @@ export default memo(() => {
     setEditPage(item)
 
     switch (e.key) {
-      case '1': break;
+      case '1': 
+        // 回头要检测一下这里为什么会无法执行
+        // navigate(`/project/${projectId}/edit/page/${item.pageId}`)
+        window.location.href = `/project/${projectId}/edit/page/${item.pageId}`
+        break;
       case '2':
         setModalType('edit')
         setIsModalOpen(true)
