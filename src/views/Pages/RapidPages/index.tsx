@@ -112,13 +112,13 @@ export default memo(() => {
   }
 
   const handleClick = async (e: any, item: pageDataType) =>{
-    setEditPage(item)
+    e.domEvent.stopPropagation()
 
+    setEditPage(item)
+    
     switch (e.key) {
       case '1': 
-        // 回头要检测一下这里为什么会无法执行
-        // navigate(`/project/${projectId}/edit/page/${item.pageId}`)
-        window.location.href = `/project/${projectId}/edit/page/${item.pageId}`
+        navigate(`/project/${projectId}/edit/page/${item.pageId}`)
         break;
       case '2':
         setModalType('edit')
