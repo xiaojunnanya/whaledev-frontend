@@ -11,7 +11,7 @@ export const EditPagesMiddleStyle = styled.div`
     .edit-middle{
         flex: 1;
         background-color: #EDEFF3;
-        padding: 16px;
+        padding: 16px 6px 16px 16px;
 
         &-content{
             height: 100%;
@@ -20,6 +20,29 @@ export const EditPagesMiddleStyle = styled.div`
     }
 
     .edit-right{
-        width: 300px;
+        display: flex;
+
+        &-dot{
+            width: 9px;
+            background-color: #EDEFF3;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin-right: 1px;
+
+            .dot{
+                padding: 15px 1px;
+                border-radius: 12px 0px 0px 12px;
+                background: #FFFFFF;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        &-content{
+            height: 100%;
+            transition: width 0.4s ease
+        }
     }
 `
