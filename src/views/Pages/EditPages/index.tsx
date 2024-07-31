@@ -6,9 +6,9 @@ import { getPageInfoById } from '@/service/modules/pages'
 import { useNavigate, useParams } from 'react-router-dom'
 import { LeftOutlined } from '@ant-design/icons'
 
-import computerImg from '@/assets/images/computer.png'
-import flatImg from '@/assets/images/flat.png'
-import phoneImg from '@/assets/images/phone.png'
+import computerImg from '@/assets/images/png/computer.png'
+import flatImg from '@/assets/images/png/flat.png'
+import phoneImg from '@/assets/images/png/phone.png'
 
 interface pageType{
     id: number,

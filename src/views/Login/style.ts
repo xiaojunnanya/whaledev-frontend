@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import login_bg from '@/assets/images/login_bg.jpg'
-import login_img from '@/assets/images/login_img.png'
+import login_bg from '@/assets/images/png/login_bg.png'
+import login_img from '@/assets/images/png/login_img.png'
 
 export const LoginStyled = styled.div`
     .login-body{

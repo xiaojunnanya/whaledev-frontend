@@ -6,6 +6,39 @@ export const EditPagesMiddleStyle = styled.div`
 
     .edit-left{
         width: 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+
+        img{
+            width: 20px;
+            height: 20px;
+            margin-bottom: 6px;
+        }
+
+        .edit-left-item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            margin: 16px 0;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        &-top{
+            &-item{
+                &:hover{
+                    background-color: #EDEFF3;
+                }
+            }
+        }
+
+        &-bottom{
+            /* margin-bottom: 12px; */
+        }
     }
 
     .edit-middle{
@@ -31,7 +64,7 @@ export const EditPagesMiddleStyle = styled.div`
             margin-right: 1px;
 
             .dot{
-                padding: 15px 1px;
+                padding: 15px 0px;
                 border-radius: 12px 0px 0px 12px;
                 background: #FFFFFF;
                 cursor: pointer;
