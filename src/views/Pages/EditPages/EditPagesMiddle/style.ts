@@ -54,14 +54,13 @@ export const EditPagesMiddleStyle = styled.div`
         height: 100%;
         display: none;
 
-        /* position去掉就是固定 */
-        position: absolute;
         top: 0;
         bottom: 0;
         left: 48px;
         background-color: #fff;
         box-shadow: 4px 6px 6px 0 rgba(31, 50, 88, .08);
         z-index: 999;
+
 
         &-active{
             display: block;
@@ -102,7 +101,9 @@ export const EditPagesMiddleStyle = styled.div`
 
         &-content{
             height: 100%;
-            transition: width 0.4s ease
+            /* 这是个不好的东西，要优化 */
+            overflow: hidden;
+            transition: all 0.4s ease
         }
     }
 `

@@ -71,7 +71,7 @@ export default memo((props: propsType) => {
     return () => {
         window.removeEventListener("resize", handleWindowResize)
     }
-  }, [])
+  }, [isAffix, active])
 
 
   const handleWindowResize = () => {
@@ -112,7 +112,8 @@ export default memo((props: propsType) => {
           </div>
         </div>
         
-        <div className={`edit-side ${active.key ? 'edit-side-active' : ''}`} style={{ position: isAffix ? 'static' : 'absolute'}}>
+        <div className={`edit-side ${active.key ? 'edit-side-active' : ''}`} 
+        style={{ position: isAffix ? 'static' : 'absolute'}}>
           <EditPageSide activeObj={{active, setActive}} affix={{ isAffix, setIsAffix}} />
         </div>
 
@@ -132,7 +133,9 @@ export default memo((props: propsType) => {
           <div className='edit-right-content' 
             style={{ width: rightContentExpand ? '300px' : '0' }}
             onTransitionEnd={handleWindowResize}
-          >新开组件</div>
+          >
+            新开组件新开组件新开组件新开组件新开组件新开组件
+          </div>
         </div>
     </EditPagesMiddleStyle>
   )
