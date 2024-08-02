@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const EditPagesMiddleStyle = styled.div`
     display: flex;
     height: calc(100vh - 46px - 48px - 1px);
+    position: relative;
 
     .edit-left{
         width: 48px;
@@ -18,7 +19,7 @@ export const EditPagesMiddleStyle = styled.div`
             margin-bottom: 6px;
         }
 
-        .edit-left-item{
+        &-item{
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,6 +27,12 @@ export const EditPagesMiddleStyle = styled.div`
             margin: 16px 0;
             padding: 4px;
             border-radius: 4px;
+            user-select: none;
+        }
+
+        &-active{
+            background-color: #EDEFF3;
+            color: #1E72F5;
         }
 
         &-top{
@@ -38,6 +45,26 @@ export const EditPagesMiddleStyle = styled.div`
 
         &-bottom{
             /* margin-bottom: 12px; */
+        }
+    }
+
+    .edit-side{
+        width: 299px;
+        border-left: 1px solid #EDEFF3;
+        height: 100%;
+        display: none;
+
+        /* position去掉就是固定 */
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 48px;
+        background-color: #fff;
+        box-shadow: 4px 6px 6px 0 rgba(31, 50, 88, .08);
+        z-index: 999;
+
+        &-active{
+            display: block;
         }
     }
 

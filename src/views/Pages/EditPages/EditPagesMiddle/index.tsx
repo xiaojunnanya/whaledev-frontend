@@ -7,8 +7,21 @@ import dataSource from '@/assets/images/svg/dataSource.svg'
 import outlineTree from '@/assets/images/svg/outlineTree.svg'
 import sourceCode from '@/assets/images/svg/sourceCode.svg'
 import howUse from '@/assets/images/svg/howUse.svg'
+import EditPageSide from '../EditPageSide'
 
-const editLeftTop = [
+
+interface propsType{
+  setViewWidth: (width: number) => void
+}
+
+type activeType = 'outlineTree' | 'componentLibrary' | 'dataSource' | 'sourceCode' | null
+interface itemProps{
+  key: activeType
+  title: string
+  icon: JSX.Element
+}
+
+const editLeftTop: itemProps[] = [
   {
     key:'outlineTree',
     title: '大纲树',
@@ -39,17 +52,14 @@ const editLeftBottom = [
   }
 ]
 
-interface propsType{
-  setViewWidth: (width: number) => void
-}
-
-type activeType = 'outlineTree' | 'componentLibrary' | 'dataSource' | 'sourceCode' | null
 
 export default memo((props: propsType) => {
 
   const editMiddleContent = useRef<HTMLDivElement>(null)
   const [ rightContentExpand, setRightContentExpand ] = useState(true)
-  const [ active, setActive ] = useState<activeType>(null)
+  const [ active, setActive ] = useState<itemProps>({} as itemProps)
+  // 是否固定
+  const [ isAffix, setIsAffix ] = useState(false)
   
   const { setViewWidth } = props
 
@@ -75,7 +85,8 @@ export default memo((props: propsType) => {
             {
               editLeftTop.map(item =>{
                 return (
-                  <div key={item.key} className='edit-left-top-item edit-left-item'>
+                  <div key={item.key} className={`edit-left-top-item edit-left-item ${active.key === item.key ? 'edit-left-active' : ''}`} 
+                  onClick={() => setActive(item.key === active.key ? {} as itemProps : item)}>
                     {
                       item.icon
                     }
@@ -100,6 +111,11 @@ export default memo((props: propsType) => {
             }
           </div>
         </div>
+        
+        <div className={`edit-side ${active.key ? 'edit-side-active' : ''}`} style={{ position: isAffix ? 'static' : 'absolute'}}>
+          <EditPageSide activeObj={{active, setActive}} affix={{ isAffix, setIsAffix}} />
+        </div>
+
         <div className='edit-middle'>
           <div className='edit-middle-content' ref={editMiddleContent}>
             render,新开一个组件
@@ -116,7 +132,7 @@ export default memo((props: propsType) => {
           <div className='edit-right-content' 
             style={{ width: rightContentExpand ? '300px' : '0' }}
             onTransitionEnd={handleWindowResize}
-          ></div>
+          >新开组件</div>
         </div>
     </EditPagesMiddleStyle>
   )
