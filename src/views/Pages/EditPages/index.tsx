@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { EditPagesStyle } from './style'
-import EditPagesMiddle from './EditPagesMiddle'
+import EditPagesMiddle from './Middle'
 import { Button, InputNumber } from 'antd'
 import { getPageInfoById } from '@/service/modules/pages'
 import { useNavigate, useParams } from 'react-router-dom'

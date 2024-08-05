@@ -31,7 +31,7 @@ export default memo(() => {
             <div className='subtitle'>非LowCode，鲸落低代码研发平台</div>
             <div className='btn'>
               <Button type='primary' size='large' onClick={use}>立即使用</Button>
-              <Button size='large'>体验Demo</Button>
+              {/* <Button size='large'>体验Demo</Button> */}
             </div>
           </div>
         </div>

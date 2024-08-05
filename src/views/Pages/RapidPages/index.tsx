@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react'
 import { RapidPagesStyle } from './style'
-import { Button, Dropdown, Form, Input, Modal, Select } from 'antd'
-import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined, SignatureOutlined } from '@ant-design/icons'
+import { Button, Dropdown, Form, Input, Modal, Select, Tag } from 'antd'
+import { CopyOutlined, DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined, SignatureOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPage, deletePage, getPage, updatePage } from '@/service/modules/pages';
@@ -32,6 +32,12 @@ const settingItems: MenuProps['items'] = [
   },
   {
     key: '3',
+    label: ( <span> 复制 </span> ),
+    icon: <CopyOutlined />,
+    style:{ fontSize: '12px' }
+  },
+  {
+    key: '4',
     label: ( <span> 删除 </span> ),
     icon: <DeleteOutlined />,
     style:{ fontSize: '12px' }
@@ -125,7 +131,7 @@ export default memo(() => {
         setIsModalOpen(true)
         form.setFieldsValue(item)
         break;
-      case '3':
+      case '4':
         await deleteModal.confirm({
           title: '提示',
           content: (
@@ -196,7 +202,7 @@ export default memo(() => {
           <Button type="primary" size='small' shape="circle" 
           icon={<PlusOutlined />} onClick={()=>{setIsModalOpen(true);setModalType('create')}}/>
         </div>
-        
+        {/* 遗留的问题：内容过多滚动条的出现问题 */}
         <div className='page'>
           {
             pageData.map((item) => {
@@ -206,7 +212,8 @@ export default memo(() => {
                   key={item.id}>
                   <div className='page-item-name'>
                     <span>{ item.pageName }</span>
-                    {/* <Tag color="cyan">{ item.pageType }</Tag> */}
+                    {/* 待添加的功能：展示标签，不知道展示在哪 */}
+                    {/* <Tag color="cyan">自定义页面</Tag> */}
                   </div>
                   <Dropdown menu={{ items: settingItems, onClick: (e) => {handleClick(e, item)} }} arrow={{ pointAtCenter: true }}>
                     <SettingOutlined className='settingOutlined'/>

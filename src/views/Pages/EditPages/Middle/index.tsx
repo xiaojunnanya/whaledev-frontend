@@ -7,7 +7,8 @@ import dataSource from '@/assets/images/svg/dataSource.svg'
 import outlineTree from '@/assets/images/svg/outlineTree.svg'
 import sourceCode from '@/assets/images/svg/sourceCode.svg'
 import howUse from '@/assets/images/svg/howUse.svg'
-import EditPageSide from '../EditPageSide'
+import EditPageSide from '../Side'
+import EditPageContent from '../Content'
 
 
 interface propsType{
@@ -15,7 +16,7 @@ interface propsType{
 }
 
 type activeType = 'outlineTree' | 'componentLibrary' | 'dataSource' | 'sourceCode' | null
-interface itemProps{
+export interface itemProps{
   key: activeType
   title: string
   icon: JSX.Element
@@ -119,7 +120,7 @@ export default memo((props: propsType) => {
 
         <div className='edit-middle'>
           <div className='edit-middle-content' ref={editMiddleContent}>
-            render,新开一个组件
+            <EditPageContent />
           </div>
         </div>
         <div className='edit-right'>
@@ -130,6 +131,7 @@ export default memo((props: propsType) => {
               }
             </div>
           </div>
+          {/* 遗留的问题：收起的时候会有滚动条，内容发生变化 */}
           <div className='edit-right-content' 
             style={{ width: rightContentExpand ? '300px' : '0' }}
             onTransitionEnd={handleWindowResize}
