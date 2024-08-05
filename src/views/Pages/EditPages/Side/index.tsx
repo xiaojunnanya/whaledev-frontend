@@ -4,6 +4,10 @@ import affixImg from '@/assets/images/svg/affix.svg'
 import noaffixImg from '@/assets/images/svg/notAffix.svg'
 import { CloseOutlined } from '@ant-design/icons'
 import { itemProps } from '../Middle'
+import OutlineTree from './OutlineTree'
+import ComponentLibrary from './ComponentLibrary'
+import DataSource from './DataSource'
+import SourceCode from './SourceCode'
 
 
 interface propsType{
@@ -23,6 +27,16 @@ export default memo((props: propsType) => {
   const { active, setActive } = activeObj
   const { isAffix, setIsAffix } = affix
 
+  let ShowDom = null
+
+  switch (active.key) {
+    case 'outlineTree': ShowDom = <OutlineTree />; break;
+    case 'componentLibrary': ShowDom = <ComponentLibrary />; break;
+    case 'dataSource': ShowDom = <DataSource />; break;
+    case 'sourceCode': ShowDom = <SourceCode />; break;
+    default: break;
+  }
+
   return (
     <EditPageSideStyle>
       <div className='side-top'>
@@ -33,8 +47,9 @@ export default memo((props: propsType) => {
         </div>
       </div>
       <div className='side-content'>
-        {/* 根据选择进行渲染 */}
-        123
+        {
+          ShowDom
+        }
       </div>
     </EditPageSideStyle>
   )
