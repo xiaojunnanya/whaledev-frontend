@@ -1,12 +1,11 @@
 import { memo, useEffect, useState } from 'react'
 import { RapidPagesStyle } from './style'
-import { Button, Dropdown, Form, Input, Modal, Select, Tag } from 'antd'
+import { Button, Dropdown, Form, Input, Modal, Select } from 'antd'
 import { CopyOutlined, DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined, SignatureOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPage, deletePage, getPage, updatePage } from '@/service/modules/pages';
-import { changeGlobalMessage } from '@/store/modules/global';
-import { useAppDispatch } from '@/store';
+import { useMessage } from '@/store/global';
 
 const { Option } = Select
 
@@ -62,14 +61,13 @@ const addItems = [
 export default memo(() => {
   const params = useParams()
   const { projectId = '', pageId = '' } = params
-  
+  const { setMessage } = useMessage()
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const [ pageActive,  setPageActive ] = useState(pageId)
   const [ modalType, setModalType ] = useState<'create' | 'edit'>('create')
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const dispatch = useAppDispatch()
   const [ pageData, setPageData ] = useState<pageDataType[]>([])
   const [ editPage, setEditPage ] = useState<pageDataType>({} as pageDataType)
   const [ deleteModal, contextDeleteHolder ] = Modal.useModal();
@@ -108,11 +106,11 @@ export default memo(() => {
 
       if(data.statusCode === 1200){
         getAllPages()
-        dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+        setMessage({type:'success', text: data?.data})
         setIsModalOpen(false)
         form.resetFields()
       }else{
-        dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+        setMessage({type:'error', text: data?.data || '服务器异常，请稍后重试' })
       }
     })
   }
@@ -146,9 +144,9 @@ export default memo(() => {
               navigate(`/project/${projectId}/rapid`)
               setPageActive('')
               getAllPages()
-              dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+              setMessage({type:'success', text: data?.data})
             }else{
-              dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+              setMessage({type:'error', text: data?.data || '服务器异常，请稍后重试' })
             }
           }
         })
