@@ -13,9 +13,12 @@ const App = memo(() => {
   const { message: globalMessage } = useMessage()
   const { pathname } = useLocation()
   const [ showHeader, setShowHeader ] = useState<boolean>(true)
-
+  console.log(pathname)
 
   useEffect(()=>{
+    // 不加这个在存在弹窗的时候路由跳转重新弹出弹窗
+    messageApi.destroy()
+
     if(pathname === '/login'){
       setShowHeader(false)
     }else{
@@ -23,6 +26,32 @@ const App = memo(() => {
     }
   }, [pathname])
   
+
+  useEffect(()=>{
+    window.addEventListener('error', catchErr)
+    window.addEventListener('unhandledrejection', catchErr)
+
+    return () => {
+      window.removeEventListener('error', catchErr)
+      window.removeEventListener('unhandledrejection', catchErr)
+    }
+  }, [])
+
+  useEffect(()=>{
+    messageApi.destroy()
+
+    const { type, text } = globalMessage
+    if(type){
+      switch (type) {
+        case 'success': messageApi.success(text);break;
+        case 'error': messageApi.error(text);break;
+        case 'warning': messageApi.warning(text);break;
+        case 'info': messageApi.info(text);break;
+      
+        default: messageApi.destroy();break;
+      }
+    }
+  }, [globalMessage])
 
   // 捕获错误：系统+网络(通过promise.reject抛出)
   const catchErr = (e: any) =>{
@@ -54,31 +83,6 @@ const App = memo(() => {
     // 除了弹窗提示，也需要上报：采用上传gif
     errorApi.error(notificationMessage)
   }
-
-  useEffect(()=>{
-    window.addEventListener('error', catchErr)
-    window.addEventListener('unhandledrejection', catchErr)
-
-    return () => {
-      window.removeEventListener('error', catchErr)
-      window.removeEventListener('unhandledrejection', catchErr)
-    }
-  }, [])
-
-  useEffect(()=>{
-    messageApi.destroy()
-    const { type, text } = globalMessage
-    if(type){
-      switch (type) {
-        case 'success': messageApi.success(text);break;
-        case 'error': messageApi.error(text);break;
-        case 'warning': messageApi.warning(text);break;
-        case 'info': messageApi.info(text);break;
-      
-        default: messageApi.destroy();break;
-      }
-    }
-  }, [globalMessage])
 
   return (
     <>
