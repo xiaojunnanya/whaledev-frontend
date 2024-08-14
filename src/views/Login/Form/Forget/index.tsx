@@ -1,14 +1,14 @@
 import { memo, useEffect, useState } from 'react'
 import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import { useDispatch } from 'react-redux';
-import { changeMode } from '@/store/modules/login';
 import { checkCodeServer, resetPassword, sendEmail } from '@/service/modules/login';
-import { changeGlobalMessage } from '@/store/modules/global';
+import { useMode } from '@/store/login';
+import { useMessage } from '@/store/global';
 
 export default memo(() => {
   const [form] = Form.useForm();
-  const dispatch = useDispatch()
+  const { setMode } = useMode()
+  const { setMessage } = useMessage()
   const [ btnName, setBtnName ] = useState<string>('获取验证码')
   const [ codeImg, setCodeImg ] = useState<string>('')
 
@@ -20,10 +20,10 @@ export default memo(() => {
     const { data } = await resetPassword(values)
 
     if(data.statusCode === 1200){
-      dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
-      dispatch(changeMode('login'))
+      setMessage({ type:'success', text: data?.data})
+      setMode('login')
     }else{
-      dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+      setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试' })
       updateCode()
       form.resetFields(['checkCode'])
     }
@@ -42,9 +42,9 @@ export default memo(() => {
       
       const { data } = await sendEmail(email, 'register')
       if(data.statusCode === 1200){
-        dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+        setMessage({ type:'success', text: data?.data})
       }else{
-        dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+        setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试' })
       }
 
     })
@@ -69,7 +69,7 @@ export default memo(() => {
   const aClick = (e: any, index: number)=>{
     e.stopPropagation()
     if(index === 1){
-      dispatch(changeMode('login'))
+      setMode('login')
     }
   }
   

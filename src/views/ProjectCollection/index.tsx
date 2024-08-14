@@ -5,10 +5,9 @@ import { Avatar, Button, Card, Col, Form, Input, Modal, Pagination, Popconfirm, 
 import type { PaginationProps } from 'antd'
 import { CopyOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
 import { createProject, deleteProject, getProject, getProjectState, getProjectStateColor, getProjectType, updateProject } from '@/service/modules/project';
-import { useAppDispatch } from '@/store';
-import { changeGlobalMessage } from '@/store/modules/global';
 import { getImageShow } from '@/service/modules/common'
 import { useNavigate } from 'react-router-dom'
+import { useMessage } from '@/store/global'
 
 const { Meta } = Card;
 const { Option } = Select
@@ -29,7 +28,7 @@ interface projectDataType extends FieldType{
 // 搜索防抖
 export default memo(() => {
   const [form] = Form.useForm()
-  const dispatch = useAppDispatch()
+  const { setMessage } = useMessage()
   const navigate = useNavigate()
 
 
@@ -117,11 +116,11 @@ export default memo(() => {
 
       if(data.statusCode === 1200){
         getAllProjects(modalType === 'create' ? 1 : pageConfig.current)
-        dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+        setMessage({ type:'success', text: data?.data})
         setIsModalOpen(false)
         form.resetFields()
       }else{
-        dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+        setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试'})
       }
     })
   }
@@ -137,9 +136,9 @@ export default memo(() => {
 
     if(data.statusCode === 1200){
       getAllProjects(pageConfig.current)
-      dispatch(changeGlobalMessage({ type:'success', message: data?.data}))
+      setMessage({ type:'success', text: data?.data})
     }else{
-      dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+      setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试'})
     }
   }
 

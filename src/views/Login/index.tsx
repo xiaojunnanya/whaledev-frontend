@@ -6,18 +6,13 @@ import LoginModel from './Form/Login'
 import AccountModel from './Form/Register'
 import ForgetModel from './Form/Forget'
 
-import { useAppSelector, useAppShallowEqual } from '@/store'
+import { useMode } from '@/store/login'
 
 const Login = memo(() => {
-
-    const { loginMode } = useAppSelector(state =>{
-        return { 
-            loginMode: state.login.mode
-        }
-    }, useAppShallowEqual)
+    const { mode } = useMode()
 
     const showModel  = () =>{
-        switch (loginMode) {
+        switch (mode) {
             case 'login':
                 return <LoginModel></LoginModel>
             case 'account':

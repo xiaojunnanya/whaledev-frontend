@@ -2,19 +2,19 @@ import { memo } from 'react'
 import { HomeStyled } from './style'
 import { Button } from 'antd'
 import backVideo from '@/assets/video/background.mp4'
-import { changeGlobalMessage } from '@/store/modules/global'
-import { useAppDispatch } from '@/store'
+
 import { useNavigate } from 'react-router-dom'
+import { useMessage } from '@/store/global'
 
 export default memo(() => {
-  const dispatch = useAppDispatch()
+  const { setMessage } = useMessage()
   const navigate = useNavigate()
   
 
   const use = () =>{
     const token = localStorage.getItem('token')
     if(!token){
-      dispatch(changeGlobalMessage({ type:'warning', message: '请先登录'}))
+      setMessage({ type:'warning', text: '请先登录'})
       return
     }
 

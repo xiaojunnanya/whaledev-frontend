@@ -2,15 +2,15 @@ import { memo, useEffect, useState } from 'react'
 
 import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import { useAppDispatch } from '@/store';
-import { changeMode } from '@/store/modules/login';
 import { checkCodeServer, login } from '@/service/modules/login';
-import { changeGlobalMessage } from '@/store/modules/global';
 import { useNavigate } from 'react-router-dom';
 import SparkMD5 from 'spark-md5';
+import { useMode } from '@/store/login';
+import { useMessage } from '@/store/global';
 
 export default memo(() => {
-  const dispatch = useAppDispatch()
+  const { setMode } = useMode()
+  const { setMessage } = useMessage()
   const [form] = Form.useForm()
   const [ codeImg, setCodeImg ] = useState<string>('')
   const naviage = useNavigate()
@@ -27,11 +27,11 @@ export default memo(() => {
     const { data } = await login(values)
     
     if(data.statusCode === 1200){
-      dispatch(changeGlobalMessage({ type:'success', message: data?.data.msg}))
+      setMessage({ type:'success', text: data?.data.msg})
       localStorage.setItem('token', data?.data.token)
       naviage('/')
     }else{
-      dispatch(changeGlobalMessage({ type:'error', message: data?.data || '服务器异常，请稍后重试' }))
+      setMessage({ type:'error', text: data?.data || '服务器异常，请稍后重试' })
       updateCode()
       form.resetFields(['checkCode'])
     }
@@ -44,10 +44,10 @@ export default memo(() => {
   const aClick = (e: any, index: number)=>{
     e.stopPropagation()
     if(index === 1){
-      dispatch(changeMode('forget'))
+      setMode('forget')
     }
     if(index === 2){
-      dispatch(changeMode('account'))
+      setMode('account')
     }
   }
 

@@ -2,15 +2,15 @@ import { memo, useEffect, useState } from 'react'
 import { useLocation, useRoutes } from 'react-router-dom'
 import routes from './router'
 import { ConfigProvider, message, notification } from 'antd'
-import { useAppSelector, useAppShallowEqual } from './store'
 import zhCN from 'antd/es/locale/zh_CN';
 import Header from './components/Header'
 import Footer from './components/Footer'
+import { useMessage } from './store/global';
 
 const App = memo(() => {
   const [ messageApi, msgContextHolder ] = message.useMessage()
   const [ errorApi, errContextHolder ] = notification.useNotification()
-
+  const { message: globalMessage } = useMessage()
   const { pathname } = useLocation()
   const [ showHeader, setShowHeader ] = useState<boolean>(true)
 
@@ -23,12 +23,6 @@ const App = memo(() => {
     }
   }, [pathname])
   
-
-  const { mess } = useAppSelector((state)=>{
-    return {
-      mess: state.global.globalMessage
-    }
-  }, useAppShallowEqual)
 
   // 捕获错误：系统+网络(通过promise.reject抛出)
   const catchErr = (e: any) =>{
@@ -73,17 +67,18 @@ const App = memo(() => {
 
   useEffect(()=>{
     messageApi.destroy()
-    if(mess.type){
-      switch (mess.type) {
-        case 'success': messageApi.success(mess.message);break;
-        case 'error': messageApi.error(mess.message);break;
-        case 'warning': messageApi.warning(mess.message);break;
-        case 'info': messageApi.info(mess.message);break;
+    const { type, text } = globalMessage
+    if(type){
+      switch (type) {
+        case 'success': messageApi.success(text);break;
+        case 'error': messageApi.error(text);break;
+        case 'warning': messageApi.warning(text);break;
+        case 'info': messageApi.info(text);break;
       
         default: messageApi.destroy();break;
       }
     }
-  }, [mess])
+  }, [globalMessage])
 
   return (
     <>
