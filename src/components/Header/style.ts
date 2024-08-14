@@ -6,7 +6,7 @@ export const HeaderStyle = styled.div`
     align-items: center;
     height: 48px;
 
-    background-color: #4CABE4;
+    background-color: #4EADE7;
     padding: 0 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 

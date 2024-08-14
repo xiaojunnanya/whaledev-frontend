@@ -279,7 +279,7 @@ export default memo(() => {
       </div>
 
       <div className='bottom'>
-        <Pagination showQuickJumper current={pageConfig.current} 
+        <Pagination showQuickJumper current={pageConfig.current} showTotal={(total) => `共 ${total} 条`}
         defaultPageSize={8} total={pageConfig.total} showSizeChanger={false}
         onChange={pageChange}/>
       </div>

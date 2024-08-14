@@ -9,6 +9,8 @@ import sourceCode from '@/assets/images/svg/sourceCode.svg'
 import howUse from '@/assets/images/svg/howUse.svg'
 import EditPageSide from '../Side'
 import EditPageContent from '../Content'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 
 interface propsType{
@@ -81,6 +83,7 @@ export default memo((props: propsType) => {
 
   return (
     <EditPagesMiddleStyle>
+      <DndProvider backend={HTML5Backend}>
         <div className='edit-left'>
           <div className='edit-left-top'>
             {
@@ -139,6 +142,7 @@ export default memo((props: propsType) => {
             新开组件新开组件新开组件新开组件新开组件新开组件
           </div>
         </div>
+      </DndProvider>
     </EditPagesMiddleStyle>
   )
 })
