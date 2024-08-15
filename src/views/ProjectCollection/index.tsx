@@ -161,7 +161,6 @@ export default memo(() => {
   }
 
   const goProjectDetail = (projectId: string) =>{
-    console.log(projectId)
     navigate(`/project/${projectId}/rapid`)
   }
 

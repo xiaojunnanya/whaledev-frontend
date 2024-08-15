@@ -13,7 +13,6 @@ const App = memo(() => {
   const { message: globalMessage } = useMessage()
   const { pathname } = useLocation()
   const [ showHeader, setShowHeader ] = useState<boolean>(true)
-  console.log(pathname)
 
   useEffect(()=>{
     // 不加这个在存在弹窗的时候路由跳转重新弹出弹窗
