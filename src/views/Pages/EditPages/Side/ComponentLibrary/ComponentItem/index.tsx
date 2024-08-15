@@ -1,7 +1,7 @@
 // src/editor/common/component-item.tsx
 import { useDrag } from 'react-dnd';
-import { ItemType } from '../../../Content';
 import { ComponentItemStyled } from './style';
+import { ItemType } from '../../../type';
 
 interface ComponentItemProps {
   // 组件名称

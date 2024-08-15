@@ -1,8 +1,8 @@
 import { memo } from 'react'
-import { ItemType } from '../../Content';
 import { ComponentLibraryStyled } from './style';
 import ComponentItem from './ComponentItem';
 import { useComponets } from '@/store/components';
+import { ItemType } from '../../type';
 
 export default memo(() => {
 

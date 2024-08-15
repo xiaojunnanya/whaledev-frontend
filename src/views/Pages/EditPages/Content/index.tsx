@@ -4,6 +4,7 @@ import { useDrop } from 'react-dnd';
 import { ContentStyle } from './style';
 import { useComponets } from '@/store/components';
 import Space from '../Side/ComponentLibrary/components/Space';
+import { ItemType } from '../type';
 
 // id/name/props/children/group(哪个组)/category(哪个类)
 // 在思考有没有加入一个类型：是布局类的还是内容类的
@@ -60,11 +61,6 @@ interface Component {
 
 const ComponentMap: { [key: string]: React.ElementType } = {
   Space, Button,
-};
-
-export const ItemType = {
-  Button: 'Button',
-  Space: 'Space',
 };
 
 
