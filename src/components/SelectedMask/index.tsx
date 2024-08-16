@@ -47,13 +47,11 @@ export default memo(forwardRef((props: IProps, ref: any) => {
         // 获取容器位置
         const { top: containerTop, left: containerLeft } = container.getBoundingClientRect();
 
-        console.log(top - containerTop + container.scrollTop, left - containerLeft);
-
         // 计算位置
         setPosition({
             top: top - containerTop,
             left: left - containerLeft,
-            width,
+            width: width,
             height,
         });
     }
@@ -72,6 +70,7 @@ export default memo(forwardRef((props: IProps, ref: any) => {
         zIndex: 99,
         borderRadius: 4,
         boxSizing: 'border-box',
+        padding: '5px'
     }
     return portalContainer ? <div style={portalStyle}/> : null
     // return portalContainer ? createPortal(

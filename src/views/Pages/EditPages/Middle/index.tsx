@@ -12,6 +12,7 @@ import EditPageContent from '../Content'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { usePage } from '@/store/page'
+import Setting from '../Side/ComponentLibrary/Setting'
 
 
 type activeType = 'outlineTree' | 'componentLibrary' | 'dataSource' | 'sourceCode' | null
@@ -135,7 +136,7 @@ export default memo(() => {
             style={{ width: rightContentExpand ? '300px' : '0' }}
             onTransitionEnd={handleWindowResize}
           >
-            新开组件新开组件新开组件新开组件新开组件新开组件
+            <Setting></Setting>
           </div>
         </div>
       </DndProvider>

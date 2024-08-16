@@ -26,6 +26,7 @@ interface IState {
   curComponent: Component | null
   addComponent: (component: Component, parentId: number) => void
   setCurComponentId: (id: number) => void
+  updateComponentProps: (componentId: number, props: any) => void
 }
 
 export const useComponets = create<IState>((set) => ({
@@ -61,5 +62,14 @@ export const useComponets = create<IState>((set) => ({
       curComponentId: id,
       curComponent: getComponentById(state.components, id)
     })
-  )
+  ),
+  updateComponentProps: (componentId: number, props: any) =>
+    set((state) => {
+      const component = getComponentById(state.components, componentId);
+      if (component) {
+        component.props = {...component.props, ...props};
+        return {components: [...state.components]};
+      }
+      return {components: [...state.components]};
+    }),
 }))
