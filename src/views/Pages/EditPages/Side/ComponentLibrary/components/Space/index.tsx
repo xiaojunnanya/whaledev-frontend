@@ -39,14 +39,14 @@ const Space: React.FC<Props> = ({ children, id }) => {
 
   if (!children?.length) {
     return (
-      <AntdSpace ref={drop} style={style}>
+      <AntdSpace ref={drop} style={style} data-component-id={id}>
         暂无内容
       </AntdSpace>
     )
   }
 
   return (
-    <AntdSpace ref={drop} style={style}>
+    <AntdSpace ref={drop} style={style} data-component-id={id}>
       {children}
     </AntdSpace>
   )

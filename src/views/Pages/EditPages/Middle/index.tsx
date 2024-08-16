@@ -11,11 +11,8 @@ import EditPageSide from '../Side'
 import EditPageContent from '../Content'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { usePage } from '@/store/page'
 
-
-interface propsType{
-  setViewWidth: (width: number) => void
-}
 
 type activeType = 'outlineTree' | 'componentLibrary' | 'dataSource' | 'sourceCode' | null
 export interface itemProps{
@@ -56,15 +53,14 @@ const editLeftBottom = [
 ]
 
 
-export default memo((props: propsType) => {
-
+export default memo(() => {
+  const  { setWidth } = usePage()
   const editMiddleContent = useRef<HTMLDivElement>(null)
   const [ rightContentExpand, setRightContentExpand ] = useState(true)
   const [ active, setActive ] = useState<itemProps>({} as itemProps)
   // 是否固定
   const [ isAffix, setIsAffix ] = useState(false)
-  
-  const { setViewWidth } = props
+
 
   useEffect(()=>{
 
@@ -78,7 +74,7 @@ export default memo((props: propsType) => {
 
 
   const handleWindowResize = () => {
-    setViewWidth(editMiddleContent.current?.offsetWidth || 0)
+    setWidth(editMiddleContent.current?.offsetWidth || 0)
   }
 
   return (

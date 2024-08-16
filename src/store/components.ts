@@ -19,14 +19,21 @@ export interface Component {
    */
   children?: Component[];
 }
-
+// 目前的id都是number类型，到时候拆除组件的时候需要变为string
 interface IState {
   components: Component[]
+  curComponentId: number
+  curComponent: Component | null
   addComponent: (component: Component, parentId: number) => void
+  setCurComponentId: (id: number) => void
 }
 
 export const useComponets = create<IState>((set) => ({
+  // 组件列表
   components: [],
+  curComponentId: -1,
+  curComponent: null,
+  // 添加组件
   addComponent: (component, parentId) =>
     // set((state) => {
     //   return {components: [...state.components, component]};
@@ -47,5 +54,12 @@ export const useComponets = create<IState>((set) => ({
         return {components: [...state.components]};
       }
       return {components: [...state.components, component]};
+    }),
+  // 设置当前选择的组件
+  setCurComponentId: (id) => set((state) => 
+    ({
+      curComponentId: id,
+      curComponent: getComponentById(state.components, id)
     })
+  )
 }))

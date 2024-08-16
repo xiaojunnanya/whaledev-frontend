@@ -74,7 +74,8 @@ export const EditPagesMiddleStyle = styled.div`
 
         &-content{
             height: 100%;
-            background-color: #fff
+            background-color: #fff;
+            position: relative;
         }
     }
 
