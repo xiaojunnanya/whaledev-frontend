@@ -1,6 +1,8 @@
 import { getComponentById } from '@/utils';
 import {create} from 'zustand';
 
+// id/name/props/children/group(哪个组)/category(哪个类)
+// 在思考有没有加入一个类型：是布局类的还是内容类的
 export interface Component {
   /**
    * 组件唯一标识
@@ -19,7 +21,8 @@ export interface Component {
    */
   children?: Component[];
 }
-// 目前的id都是number类型，到时候拆除组件的时候需要变为string
+
+// 遗留的问题：目前的id都是number类型，到时候拆除组件的时候需要变为string
 interface IState {
   components: Component[]
   curComponentId: number

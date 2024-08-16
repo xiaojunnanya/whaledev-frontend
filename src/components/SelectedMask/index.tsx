@@ -1,7 +1,6 @@
 import { usePage } from '@/store/page';
 import { forwardRef, useEffect, useImperativeHandle, useState, memo } from 'react';
 import type { CSSProperties } from 'react';
-import { createPortal } from 'react-dom';
 
 interface IProps {
     // 组件id
