@@ -12,7 +12,7 @@ import EditPageContent from '../Content'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { usePage } from '@/store/page'
-import Setting from '../Side/ComponentLibrary/Setting'
+import PropsEvent from '../PropsEvent'
 
 
 type activeType = 'outlineTree' | 'componentLibrary' | 'dataSource' | 'sourceCode' | null
@@ -136,7 +136,7 @@ export default memo(() => {
             style={{ width: rightContentExpand ? '300px' : '0' }}
             onTransitionEnd={handleWindowResize}
           >
-            <Setting></Setting>
+            <PropsEvent></PropsEvent>
           </div>
         </div>
       </DndProvider>
