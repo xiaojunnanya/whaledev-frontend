@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react';
 
 interface IProps {
     // 组件id
-    componentId: number,
+    componentId: string,
     // 容器class
     containerClassName: string,
     // 相对容器class

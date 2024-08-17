@@ -8,10 +8,10 @@ export default memo(() => {
 
   const { addComponent } = useComponets()
 
-  const onDragEnd = (dropResult:  { name: string, props: any, id: number }) => {
+  const onDragEnd = (dropResult:  { name: string, props: any, id: string }) => {
     // 拖拽结束，添加数据
     addComponent({
-      id: new Date().getTime(),
+      id: String(new Date().getTime()),
       name: dropResult.name,
       props: dropResult.props,
     }, dropResult.id)

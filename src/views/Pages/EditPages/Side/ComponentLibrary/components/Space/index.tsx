@@ -7,7 +7,7 @@ interface Props {
   // 当前组件的子节点
   children: any;
   // 当前组件的id
-  id: number;
+  id: string;
 }
 
 const Space: React.FC<Props> = ({ children, id }) => {

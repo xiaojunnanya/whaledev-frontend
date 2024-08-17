@@ -6,8 +6,8 @@ import { DownOutlined } from '@ant-design/icons';
 
 export default memo(() => {
 
-  const { components, setCurComponentId } = useComponets();
-  console.log(components)
+  const { components, setCurComponentId, curComponentId } = useComponets();
+
   const componentSelect = ([selectedKey]: any[]) => {
     setCurComponentId(selectedKey)
   }
@@ -16,7 +16,7 @@ export default memo(() => {
   let componentsTree = [
     {
       name: 'Page',
-      id: -1,
+      id: '-1',
       children: components
     }
   ]
@@ -26,6 +26,7 @@ export default memo(() => {
       {/* <div>Page</div> */}
       <Tree
         fieldNames={{ title: 'name', key: 'id' }}
+        selectedKeys={[curComponentId]}
         treeData={componentsTree as any}
         switcherIcon={<DownOutlined />}
         showLine

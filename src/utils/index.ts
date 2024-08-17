@@ -9,7 +9,7 @@ import { Component } from "@/store/components";
  */
 export function getComponentById(
     components: Component[],
-    id: number | null,
+    id: string | null,
   ): Component | null {
     if (!id) return null;
     for (const component of components) {

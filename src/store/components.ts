@@ -7,7 +7,7 @@ export interface Component {
   /**
    * 组件唯一标识
    */
-  id: number;
+  id: string;
   /**
    * 组件名称
    */
@@ -25,17 +25,17 @@ export interface Component {
 // 遗留的问题：目前的id都是number类型，到时候拆除组件的时候需要变为string
 interface IState {
   components: Component[]
-  curComponentId: number
+  curComponentId: string
   curComponent: Component | null
-  addComponent: (component: Component, parentId: number) => void
-  setCurComponentId: (id: number) => void
-  updateComponentProps: (componentId: number, props: any) => void
+  addComponent: (component: Component, parentId: string) => void
+  setCurComponentId: (id: string) => void
+  updateComponentProps: (componentId: string, props: any) => void
 }
 
 export const useComponets = create<IState>((set) => ({
   // 组件列表
   components: [],
-  curComponentId: -1,
+  curComponentId: '-1',
   curComponent: null,
   // 添加组件
   addComponent: (component, parentId) =>
@@ -66,7 +66,7 @@ export const useComponets = create<IState>((set) => ({
       curComponent: getComponentById(state.components, id)
     })
   ),
-  updateComponentProps: (componentId: number, props: any) =>
+  updateComponentProps: (componentId: string, props: any) =>
     set((state) => {
       const component = getComponentById(state.components, componentId);
       if (component) {

@@ -97,8 +97,8 @@ export default memo(() => {
   }))
 
   return (
-    // 遗留的问题： data-component-id={-1}
-    <ContentStyle ref={drop} className='whale-page' data-component-id={-1}>
+    // 遗留的问题： data-component-id
+    <ContentStyle ref={drop} className='whale-page' data-component-id={'-1'}>
       {renderComponents(components)}
       {curComponentId && (
         <SelectedMask
