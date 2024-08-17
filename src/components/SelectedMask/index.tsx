@@ -46,12 +46,12 @@ export default memo(forwardRef((props: IProps, ref: any) => {
         // 获取容器位置
         const { top: containerTop, left: containerLeft } = container.getBoundingClientRect();
 
-        // 计算位置
+        // 计算位置：需要拖拽一下width和height，将组件全部包住且多一点
         setPosition({
-            top: top - containerTop,
-            left: left - containerLeft,
-            width: width,
-            height,
+            top: top - containerTop - 4,
+            left: left - containerLeft - 4,
+            width: width + 8,
+            height: height + 8,
         });
     }
 
@@ -61,15 +61,14 @@ export default memo(forwardRef((props: IProps, ref: any) => {
         position: "absolute",
         left: position.left,
         top: position.top,
+        width: position.width,
+        height: position.height,
         backgroundColor: "rgba(66, 133, 244, 0.2)",
         border: "1px solid rgb(66, 133, 244)",
         pointerEvents: "none",
-        width: position.width,
-        height: position.height,
         zIndex: 99,
         borderRadius: 4,
-        boxSizing: 'border-box',
-        padding: '5px'
+        boxSizing: 'border-box'
     }
     return portalContainer ? <div style={portalStyle}/> : null
     // return portalContainer ? createPortal(
