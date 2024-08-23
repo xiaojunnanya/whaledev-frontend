@@ -35,7 +35,7 @@ interface IState {
 export const useComponets = create<IState>((set) => ({
   // 组件列表
   components: [],
-  curComponentId: '-1',
+  curComponentId: '-2',
   curComponent: null,
   // 添加组件
   addComponent: (component, parentId) =>
