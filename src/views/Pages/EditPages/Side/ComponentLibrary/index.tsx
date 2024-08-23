@@ -3,7 +3,6 @@ import { ComponentLibraryStyled } from './style';
 import ComponentItem from './ComponentItem';
 import { useComponets } from '@/store/components';
 import { ItemType } from '../../type';
-import * as Component from '@/packages'
 
 export default memo(() => {
 
@@ -22,6 +21,7 @@ export default memo(() => {
     <ComponentLibraryStyled>
       <ComponentItem onDragEnd={onDragEnd} description='按钮' name={ItemType.Button} />
       <ComponentItem onDragEnd={onDragEnd} description='间距' name={ItemType.Space} />
+      <ComponentItem onDragEnd={onDragEnd} description='标题' name={ItemType.Title} />
     </ComponentLibraryStyled>
   )
 })

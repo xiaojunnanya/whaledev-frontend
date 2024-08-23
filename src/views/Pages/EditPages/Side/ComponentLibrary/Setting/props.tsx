@@ -1,32 +1,7 @@
 import { Form, Input, Select } from 'antd';
 import { useEffect } from 'react';
-import { ItemType } from '../../../type';
+import { componentPropsMap } from '../../../type';
 import { useComponets } from '@/store/components';
-
-const componentSettingMap = {
-  [ItemType.Button]: [{
-    name: 'type',
-    label: '按钮类型',
-    type: 'select',
-    options: [{ label: '主按钮', value: 'primary' }, { label: '次按钮', value: 'default' }],
-  }, {
-    name: 'children',
-    label: '文本',
-    type: 'input',
-  }],
-  [ItemType.Space]: [
-    {
-      name: 'size',
-      label: '间距大小',
-      type: 'select',
-      options: [
-        { label: '大', value: 'large' },
-        { label: '中', value: 'middle' },
-        { label: '小', value: 'small' },
-      ],
-    },
-  ],
-}
 
 const Setting: React.FC = () => {
 
@@ -45,7 +20,7 @@ const Setting: React.FC = () => {
    * @returns 
    */
   function renderFormElememt(setting: any) {
-    const { type, options } = setting;
+    const { type, options, value } = setting;
 
     if (type === 'select') {
       return (
@@ -53,7 +28,7 @@ const Setting: React.FC = () => {
       )
     } else if (type === 'input') {
       return (
-        <Input />
+        <Input value={value}/>
       )
     }
   }
@@ -78,7 +53,8 @@ const Setting: React.FC = () => {
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
       >
-        {(componentSettingMap[curComponent.name] || []).map(setting => {
+        {(componentPropsMap[curComponent.name] || []).map(setting => {
+          console.log(setting, 'setting')
           return (
             <Form.Item name={setting.name} label={setting.label} key={setting.name}>
               {renderFormElememt(setting)}

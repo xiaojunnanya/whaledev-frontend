@@ -1,6 +1,6 @@
 import { ItemType } from '@/views/Pages/EditPages/type';
 import { Space as AntdSpace } from 'antd';
-import React from "react";
+import type { FC } from "react";
 import { useDrop } from 'react-dnd';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   id: string;
 }
 
-const Space: React.FC<Props> = ({ children, id }) => {
+const Space: FC<Props> = ({ children, id }) => {
 
   const [{ canDrop }, drop] = useDrop(() => ({
     accept: [ItemType.Space, ItemType.Button],

@@ -1,7 +1,17 @@
-import { memo } from 'react'
+import { FC, memo } from 'react'
 
-export default memo(() => {
+interface Props {
+  // 当前组件的子节点
+  children: any;
+  // 当前组件的id
+  id: string;
+}
+
+const Title: FC<Props> = memo(({ id }) => {
+  console.log(id, 'idid')
   return (
-    <div>123</div>
+    <div data-component-id={id}>123</div>
   )
 })
+
+export default Title

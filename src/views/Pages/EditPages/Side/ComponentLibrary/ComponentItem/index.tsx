@@ -1,7 +1,6 @@
 // src/editor/common/component-item.tsx
 import { useDrag } from 'react-dnd';
 import { ComponentItemStyled } from './style';
-import { ItemType } from '../../../type';
 
 interface ComponentItemProps {
   // 组件名称
@@ -24,7 +23,7 @@ const ComponentItem: React.FC<ComponentItemProps> = ({ name, description, onDrag
 
       onDragEnd && onDragEnd({
         name,
-        props: name === ItemType.Button ? { children: '按钮' } : {},
+        props: {},
         ...dropResult,
       });
     },

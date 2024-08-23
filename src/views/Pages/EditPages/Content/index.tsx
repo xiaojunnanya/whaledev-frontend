@@ -1,16 +1,9 @@
-import { Button } from 'antd';
 import { createElement, memo, useEffect, useRef } from 'react'
 import { useDrop } from 'react-dnd';
 import { ContentStyle } from './style';
 import { Component, useComponets } from '@/store/components';
-import Space from '../Side/ComponentLibrary/components/Space';
-import { ItemType } from '../type';
+import { ComponentMap, ItemType } from '../type';
 import SelectedMask from '@/components/SelectedMask';
-
-const ComponentMap: { [key: string]: React.ElementType } = {
-  Space, Button,
-};
-
 
 export default memo(() => {
 
@@ -78,7 +71,8 @@ export default memo(() => {
   const [ _ , drop ] = useDrop(()=>({
     accept: [
       ItemType.Button,
-      ItemType.Space
+      ItemType.Space,
+      ItemType.Title
     ],
     drop: (_, monitor) => {
       const didDrop = monitor.didDrop()

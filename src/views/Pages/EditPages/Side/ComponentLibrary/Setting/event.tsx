@@ -1,14 +1,7 @@
 // src/editor/layouts/setting/event.tsx
 import { useComponets } from '@/store/components';
 import { Collapse, Input, Select } from 'antd';
-import { ItemType } from '../../../type';
-
-const componentEventMap = {
-  [ItemType.Button]: [{
-    name: 'onClick',
-    label: '点击事件',
-  }],
-}
+import { componentEventMap } from '../../../type';
 
 const ComponentEvent = () => {
 
@@ -51,7 +44,7 @@ const ComponentEvent = () => {
   if (!curComponent) return null;
 
   return (
-    <div className='px-[12px]'>
+    <div>
       {(componentEventMap[curComponent.name] || []).map(setting => {
         return (
           <Collapse key={setting.name} defaultActiveKey={setting.name}>
