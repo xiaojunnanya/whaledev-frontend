@@ -131,7 +131,7 @@ export default memo(() => {
               }
             </div>
           </div>
-          {/* 遗留的问题：收起的时候会有滚动条，内容发生变化 */}
+          {/* 遗留的问题：收起的时候会有滚动条，内容发生变化,应该和block有关 */}
           <div className='edit-right-content' 
             style={{ width: rightContentExpand ? '300px' : '0' }}
             onTransitionEnd={handleWindowResize}

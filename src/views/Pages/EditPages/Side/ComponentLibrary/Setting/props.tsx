@@ -54,7 +54,6 @@ const Setting: React.FC = () => {
         wrapperCol={{ span: 14 }}
       >
         {(componentPropsMap[curComponent.name] || []).map(setting => {
-          console.log(setting, 'setting')
           return (
             <Form.Item name={setting.name} label={setting.label} key={setting.name}>
               {renderFormElememt(setting)}
