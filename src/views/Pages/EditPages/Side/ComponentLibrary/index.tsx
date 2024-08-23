@@ -3,6 +3,7 @@ import { ComponentLibraryStyled } from './style';
 import ComponentItem from './ComponentItem';
 import { useComponets } from '@/store/components';
 import { ItemType } from '../../type';
+import * as Component from '@/packages'
 
 export default memo(() => {
 
