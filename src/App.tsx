@@ -5,7 +5,7 @@ import { ConfigProvider, message, notification } from 'antd'
 import zhCN from 'antd/es/locale/zh_CN';
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { useMessage } from './store/global';
+import { useMessage } from './stores/global';
 
 const App = memo(() => {
   const [ messageApi, msgContextHolder ] = message.useMessage()

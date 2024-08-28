@@ -11,7 +11,7 @@ import EditPageSide from '../Side'
 import Middle from '../Middle'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { usePage } from '@/store/page'
+import { usePage } from '@/stores/page'
 import PropsEvent from '../PropsEvent'
 
 
@@ -60,7 +60,7 @@ export default memo(() => {
   const [ rightContentExpand, setRightContentExpand ] = useState(true)
   const [ active, setActive ] = useState<itemProps>({} as itemProps)
   // 是否固定
-  const [ isAffix, setIsAffix ] = useState(false)
+  const [ isAffix, setIsAffix ] = useState(true)
 
 
   useEffect(()=>{

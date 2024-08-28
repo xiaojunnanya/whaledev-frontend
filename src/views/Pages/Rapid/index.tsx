@@ -5,7 +5,7 @@ import { CopyOutlined, DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlin
 import type { MenuProps } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPage, deletePage, getPage, updatePage } from '@/service/modules/pages';
-import { useMessage } from '@/store/global';
+import { useMessage } from '@/stores/global';
 
 const { Option } = Select
 

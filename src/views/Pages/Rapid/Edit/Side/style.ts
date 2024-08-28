@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const EditPageSideStyle = styled.div`
-
+    height: 100%;
+    
     .side-top{
         display: flex;
         justify-content: space-between;

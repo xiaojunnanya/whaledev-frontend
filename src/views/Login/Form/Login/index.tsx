@@ -5,8 +5,8 @@ import { Button, Form, Input } from 'antd';
 import { checkCodeServer, login } from '@/service/modules/login';
 import { useNavigate } from 'react-router-dom';
 import SparkMD5 from 'spark-md5';
-import { useMode } from '@/store/login';
-import { useMessage } from '@/store/global';
+import { useMode } from '@/stores/login';
+import { useMessage } from '@/stores/global';
 
 export default memo(() => {
   const { setMode } = useMode()

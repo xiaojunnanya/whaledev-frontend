@@ -9,7 +9,7 @@ import { LeftOutlined } from '@ant-design/icons'
 import computerImg from '@/assets/images/png/computer.png'
 import flatImg from '@/assets/images/png/flat.png'
 import phoneImg from '@/assets/images/png/phone.png'
-import { usePage } from '@/store/page'
+import { usePage } from '@/stores/page'
 
 interface pageType{
     id: number,

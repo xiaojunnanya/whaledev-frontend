@@ -3,11 +3,11 @@ import { EditPageSideStyle } from './style'
 import affixImg from '@/assets/images/svg/affix.svg'
 import noaffixImg from '@/assets/images/svg/notAffix.svg'
 import { CloseOutlined } from '@ant-design/icons'
-import { itemProps } from '../Middle'
 import OutlineTree from './OutlineTree'
 import ComponentLibrary from './ComponentLibrary'
 import DataSource from './DataSource'
 import SourceCode from './SourceCode'
+import { itemProps } from '../Content'
 
 
 interface propsType{
@@ -46,11 +46,11 @@ export default memo((props: propsType) => {
           <CloseOutlined onClick={()=> setActive({} as itemProps)} />
         </div>
       </div>
-      <div className='side-content'>
+      <>
         {
           ShowDom
         }
-      </div>
+      </>
     </EditPageSideStyle>
   )
 })

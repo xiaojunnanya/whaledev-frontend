@@ -7,7 +7,7 @@ import { CopyOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant
 import { createProject, deleteProject, getProject, getProjectState, getProjectStateColor, getProjectType, updateProject } from '@/service/modules/project';
 import { getImageShow } from '@/service/modules/common'
 import { useNavigate } from 'react-router-dom'
-import { useMessage } from '@/store/global'
+import { useMessage } from '@/stores/global'
 
 const { Meta } = Card;
 const { Option } = Select

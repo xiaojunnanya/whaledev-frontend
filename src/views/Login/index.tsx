@@ -6,7 +6,7 @@ import LoginModel from './Form/Login'
 import AccountModel from './Form/Register'
 import ForgetModel from './Form/Forget'
 
-import { useMode } from '@/store/login'
+import { useMode } from '@/stores/login'
 
 const Login = memo(() => {
     const { mode } = useMode()

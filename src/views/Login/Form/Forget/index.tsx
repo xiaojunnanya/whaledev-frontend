@@ -2,8 +2,8 @@ import { memo, useEffect, useState } from 'react'
 import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { checkCodeServer, resetPassword, sendEmail } from '@/service/modules/login';
-import { useMode } from '@/store/login';
-import { useMessage } from '@/store/global';
+import { useMode } from '@/stores/login';
+import { useMessage } from '@/stores/global';
 
 export default memo(() => {
   const [form] = Form.useForm();
