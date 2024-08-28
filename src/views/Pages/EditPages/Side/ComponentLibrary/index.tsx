@@ -1,27 +1,8 @@
 import { memo } from 'react'
-import { ComponentLibraryStyled } from './style';
-import ComponentItem from './ComponentItem';
-import { useComponets } from '@/store/components';
-import { ItemType } from '../../type';
+import { ComponentLibraryStyled } from './style'
 
 export default memo(() => {
-
-  const { addComponent } = useComponets()
-
-  const onDragEnd = (dropResult:  { name: string, props: any, id: string }) => {
-    // 拖拽结束，添加数据
-    addComponent({
-      id: String(new Date().getTime()),
-      name: dropResult.name,
-      props: dropResult.props,
-    }, dropResult.id)
-  }
-
   return (
-    <ComponentLibraryStyled>
-      <ComponentItem onDragEnd={onDragEnd} description='按钮' name={ItemType.Button} />
-      <ComponentItem onDragEnd={onDragEnd} description='间距' name={ItemType.Space} />
-      <ComponentItem onDragEnd={onDragEnd} description='标题' name={ItemType.Title} />
-    </ComponentLibraryStyled>
+    <ComponentLibraryStyled>组件库</ComponentLibraryStyled>
   )
 })
