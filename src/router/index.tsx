@@ -3,9 +3,9 @@ import { lazy } from 'react'
 
 const Home = lazy(() => import('@/views/Home/index.tsx'))
 const Login = lazy(() => import('@/views/Login/index.tsx'))
-const ProjectCollection = lazy(() => import('@/views/ProjectCollection/index.tsx'))
-const CountPages = lazy(() => import('@/views/Pages/CountPages/index'))
-const EditPages = lazy(() => import('@/views/Pages/EditPages/index'))
+const ProjectCollection = lazy(() => import('@/views/Project'))
+const CountPages = lazy(() => import('@/views/Pages/index'))
+const EditPages = lazy(() => import('@/views/Pages/Rapid/Edit/index'))
 const NotFound = lazy(() => import('@/components/NotFound/index'))
 
 

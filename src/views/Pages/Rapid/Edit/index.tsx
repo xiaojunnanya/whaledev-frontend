@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { EditPagesStyle } from './style'
-import EditPagesMiddle from './Middle'
+import Content from './Content'
 import { Button, InputNumber } from 'antd'
 import { getPageInfoById } from '@/service/modules/pages'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -54,7 +54,7 @@ export default memo(() => {
             </div>
         </div>
 
-        <EditPagesMiddle/>
+        <Content/>
     </EditPagesStyle>
   )
 })

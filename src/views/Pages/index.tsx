@@ -5,8 +5,8 @@ import { PreviewPagesStyled } from './style'
 import { Tabs } from 'antd'
 import type { TabsProps  } from 'antd'
 import { LeftOutlined } from '@ant-design/icons'
-import RapidPages from '../RapidPages'
-import SettingPages from '../SettingPages'
+import RapidPages from './Rapid'
+import SettingPages from './Setting'
 
 
 interface ProjectInfoType {

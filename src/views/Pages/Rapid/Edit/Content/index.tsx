@@ -8,7 +8,7 @@ import outlineTree from '@/assets/images/svg/outlineTree.svg'
 import sourceCode from '@/assets/images/svg/sourceCode.svg'
 import howUse from '@/assets/images/svg/howUse.svg'
 import EditPageSide from '../Side'
-import EditPageContent from '../Content'
+import Middle from '../Middle'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { usePage } from '@/store/page'
@@ -120,7 +120,7 @@ export default memo(() => {
 
         <div className='edit-middle'>
           <div className='edit-middle-content' ref={editMiddleContent}>
-            <EditPageContent />
+            <Middle />
           </div>
         </div>
         <div className='edit-right'>
