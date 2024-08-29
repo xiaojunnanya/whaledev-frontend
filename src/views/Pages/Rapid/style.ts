@@ -20,18 +20,6 @@ export const RapidPagesStyle = styled.div`
             }
         }
 
-
-        /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-        ::-webkit-scrollbar {
-            width:4px;
-        }
-
-        /*定义滑块 内阴影+圆角*/
-        ::-webkit-scrollbar-thumb {
-            background-color:#C1C1C1;
-            border-radius: 10px;
-        }
-
         .page{
             height: calc(100% - 44px);
             overflow-y: scroll;

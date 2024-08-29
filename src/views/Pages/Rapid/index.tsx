@@ -6,6 +6,7 @@ import type { MenuProps } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPage, deletePage, getPage, updatePage } from '@/service/modules/pages';
 import { useMessage } from '@/stores/global';
+import '@/assets/css/scrollbar.css'
 
 const { Option } = Select
 

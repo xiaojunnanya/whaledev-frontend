@@ -5,6 +5,7 @@ import { Segmented } from 'antd';
 import ComponentAttr from './ComponentAttr';
 import ComponentStyle from './ComponentStyle';
 import ComponentEvent from './ComponentEvent';
+import '@/assets/css/scrollbar.css'
 // 待添加的功能：渲染待定，根据有没有来渲染
 export default memo(() => {
 
@@ -19,17 +20,17 @@ export default memo(() => {
   return (
     <PropsEventStyled>
       <Segmented value={key} onChange={setKey} block options={['属性', '样式', '事件']} />
-        <div>
-            {
-                key === '属性' && <ComponentAttr />
-            }
-            {
-                key === '样式' && <ComponentStyle />
-            }
-            {
-                key === '事件' && <ComponentEvent />
-            }
-        </div>
+      <div className='whale-props-content'>
+          {
+              key === '属性' && <ComponentAttr />
+          }
+          {
+              key === '样式' && <ComponentStyle />
+          }
+          {
+              key === '事件' && <ComponentEvent />
+          }
+      </div>
     </PropsEventStyled>
   )
 })

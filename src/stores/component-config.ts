@@ -15,7 +15,10 @@ export interface ComponentConfig {
     name: string;
     defaultProps: Record<string, any>,
     desc: string;
-    setter?: ComponentSetter[]
+    setter?: {
+        title: string,
+        propsList: ComponentSetter[]
+    }[]
     component: any
 }
  
@@ -45,18 +48,23 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
             component: Button,
             setter: [
                 {
-                    name: 'type',
-                    label: '按钮类型',
-                    type: 'select',
-                    options: [
-                            {label: '主按钮', value: 'primary'},
-                            {label: '次按钮', value: 'default'},
-                        ],
-                    },
-                {
-                    name: 'text',
-                    label: '文本',
-                    type: 'input',
+                    title: '按钮属性',
+                    propsList: [
+                        {
+                            name: 'type',
+                            label: '按钮类型',
+                            type: 'select',
+                            options: [
+                                {label: '主按钮', value: 'primary'},
+                                {label: '次按钮', value: 'default'},
+                            ],
+                        },
+                        {
+                            name: 'text',
+                            label: '文本',
+                            type: 'input',
+                        }
+                    ]
                 }
             ]
         },

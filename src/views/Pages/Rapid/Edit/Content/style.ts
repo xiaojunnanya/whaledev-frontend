@@ -83,12 +83,11 @@ export const EditPagesMiddleStyle = styled.div`
         display: flex;
 
         &-dot{
-            width: 9px;
+            width: 8px;
             background-color: #EDEFF3;
             height: 100%;
             display: flex;
             align-items: center;
-            margin-right: 1px;
 
             .dot{
                 padding: 15px 0px;
@@ -107,6 +106,7 @@ export const EditPagesMiddleStyle = styled.div`
             transition: all 0.4s ease;
             background-color: #fff;
             z-index: 999;
+            margin: 0 1px;
         }
     }
 `
