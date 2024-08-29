@@ -46,20 +46,20 @@ export default memo(() => {
   }
 
   return (
-    <ContentStyle onClick={handleClick} className='edit-area'>
+    <ContentStyle onClick={handleClick} className='whale-edit-area'>
       {renderComponents(components)}
 
       {
         curComponentId && (
           <SelectedMask
-              portalWrapperClassName='portal-wrapper'
-              containerClassName='edit-area'
+              portalWrapperClassName='whale-wrapper'
+              containerClassName='whale-edit-area'
               componentId={curComponentId}
           />
         )
       }
       
-      <div className="portal-wrapper"></div>
+      <div className="whale-wrapper"></div>
     </ContentStyle>
   )
 })
