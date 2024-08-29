@@ -11,5 +11,10 @@ export const ComponentStyleStyled = styled.div`
 
             margin-bottom: 24px;
         }
+
+        &-csseditor{
+            height: 200px;
+            margin-top: -20px;
+        }
     }
 `

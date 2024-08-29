@@ -23,7 +23,7 @@ interface Action {
   deleteComponent: (componentId: string) => void;
   updateComponentProps: (componentId: string, props: any) => void;
   setCurComponentId: (componentId: string | null) => void;
-  updateComponentStyles: (componentId: string, styles: CSSProperties) => void;
+  updateComponentStyles: (componentId: string, styles: CSSProperties, replace?: boolean) => void;
 }
 
 export const useComponetsStore = create<State & Action>(
@@ -96,11 +96,11 @@ export const useComponetsStore = create<State & Action>(
 
         return {components: [...state.components]};
       }),
-    updateComponentStyles: (componentId, styles) =>
+    updateComponentStyles: (componentId, styles, replace) =>
       set((state) => {
         const component = getComponentById(componentId, state.components);
         if (component) {
-          component.styles = {...component.styles, ...styles};
+          component.styles = replace ? {...styles} : {...component.styles, ...styles};
   
           return {components: [...state.components]};
         }

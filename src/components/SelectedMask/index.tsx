@@ -34,7 +34,14 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
 
   useEffect(() => {
     updatePosition();
-  }, [componentId, components, width]);
+  }, [componentId, width]);
+
+  // 加个延迟，样式变化的时候需要一定的时间获取渲染
+  useEffect(() => {
+    setTimeout(()=>{
+      updatePosition();
+    }, 200)
+  }, [components])
 
   function updatePosition() {
     if (!componentId) return;
