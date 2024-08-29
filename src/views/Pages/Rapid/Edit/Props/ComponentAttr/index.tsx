@@ -1,8 +1,9 @@
 import { memo, useEffect } from 'react'
 import { ComponentAttrStyled } from './style'
 import { useComponetsStore } from '@/stores/components';
-import { ComponentConfig, ComponentSetter, useComponentConfigStore } from '@/stores/component-config';
+import { useComponentConfigStore } from '@/stores/component-config';
 import { Form, Input, Select } from 'antd';
+import { ComponentConfig, ComponentSetter } from '@/materials/interface';
 
 export default memo(() => {
 
@@ -56,15 +57,17 @@ export default memo(() => {
         </div>
 
         {
-          componentConfig[curComponent.name]?.setter?.map(item => {
+          componentConfig[curComponent.name]?.setter?.map((item, index) => {
             return (
-              <div className='whale-attr'>
+              <div className='whale-attr' key={index}>
                 <div className='whale-attr-title'>{item.title}</div>
                 {
                   item.propsList.map(setter =>{
                     return (
                       <Form.Item key={setter.name} name={setter.name} label={setter.label}>
                         {renderFormElememt(setter)}
+                        {/* 遗留的问题：defaulrprops没有传递？ */}
+                        {/* <RenderFormElememt setter={setter} /> */}
                       </Form.Item>
                     )
                   })
