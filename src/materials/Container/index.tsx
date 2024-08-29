@@ -7,7 +7,7 @@ const Container = ({ children, id }: CommonComponentProps) => {
   const {canDrop, drop } = useMaterailDrop(['Button', 'Container'], id);
 
   return (
-    <ContainerStyled className='whale-container' ref={drop}
+    <ContainerStyled className='whale-container' ref={drop} data-component-id={id}
       style={{ border: canDrop ? '1px dashed #1890ff' : '1px solid #d9d9d9'}}
     >
       {children}

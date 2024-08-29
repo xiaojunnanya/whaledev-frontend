@@ -3,6 +3,8 @@ import { PropsEventStyled } from './style'
 
 export default memo(() => {
   return (
-    <PropsEventStyled>index</PropsEventStyled>
+    <PropsEventStyled>
+      index
+    </PropsEventStyled>
   )
 })

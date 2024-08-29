@@ -6,7 +6,7 @@ const Container = ({ children, id }: CommonComponentProps) => {
   const { drop } = useMaterailDrop(['Button', 'Container'], id);
 
   return (
-    <PageStyled className='whale-page' ref={drop}>
+    <PageStyled className='whale-page' ref={drop} data-component-id={id}>
       {children}
     </PageStyled>
   )
