@@ -1,11 +1,13 @@
 import { getComponentById } from '@/utils';
+import { CSSProperties } from 'react';
 import {create} from 'zustand';
 
 export interface Component {
   id: string;
   name: string;
   props: any;
-  desc: string
+  styles?: CSSProperties;
+  desc: string;
   children?: Component[];
   parentId?: string;
 }
@@ -21,10 +23,12 @@ interface Action {
   deleteComponent: (componentId: string) => void;
   updateComponentProps: (componentId: string, props: any) => void;
   setCurComponentId: (componentId: string | null) => void;
+  updateComponentStyles: (componentId: string, styles: CSSProperties) => void;
 }
 
 export const useComponetsStore = create<State & Action>(
-  ((set, get) => ({
+  (
+    (set, get) => ({
     components: [
       {
         id: '0',
@@ -92,6 +96,17 @@ export const useComponetsStore = create<State & Action>(
 
         return {components: [...state.components]};
       }),
+    updateComponentStyles: (componentId, styles) =>
+      set((state) => {
+        const component = getComponentById(componentId, state.components);
+        if (component) {
+          component.styles = {...component.styles, ...styles};
+  
+          return {components: [...state.components]};
+        }
+  
+        return {components: [...state.components]};
+      })   
     })
   )
 );

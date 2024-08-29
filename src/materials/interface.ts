@@ -1,12 +1,13 @@
-import { PropsWithChildren } from "react";
+import { CSSProperties, PropsWithChildren } from "react";
 
 export interface CommonComponentProps extends PropsWithChildren{
     id: string;
     name: string;
+    styles?: CSSProperties;
     [key: string]: any
 }
 
-type IType = 'select' | 'input'
+type IType = 'select' | 'input' | 'inputNumber'
 export interface ComponentSetter {
     name: string; // 字段名
     label: string; // 前面的文案
@@ -21,6 +22,10 @@ export interface ComponentConfig {
     setter?: {
         title: string,
         propsList: ComponentSetter[]
+    }[];
+    stylesSetter?: {
+        title: string,
+        styleList: ComponentSetter[]
     }[]
     component: any
 }
