@@ -27,6 +27,7 @@ export const useComponetsStore = create<State & Action>(
         name: 'Page',
         props: {},
         desc: '页面',
+        children: []
       }
     ],
     addComponent: (component, parentId) =>
