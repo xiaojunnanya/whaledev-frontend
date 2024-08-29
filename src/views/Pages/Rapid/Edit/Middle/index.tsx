@@ -47,7 +47,10 @@ export default memo(() => {
 
   return (
     <ContentStyle onClick={handleClick} className='whale-edit-area'>
-      {renderComponents(components)}
+
+      {
+        renderComponents(components)
+      }
 
       {
         curComponentId && (

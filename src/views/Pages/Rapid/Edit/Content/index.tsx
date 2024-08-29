@@ -12,7 +12,7 @@ import Middle from '../Middle'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { usePage } from '@/stores/page'
-import PropsEvent from '../PropsEvent'
+import PropsEvent from '../Props'
 
 
 type activeType = 'outlineTree' | 'componentLibrary' | 'dataSource' | 'sourceCode' | null
