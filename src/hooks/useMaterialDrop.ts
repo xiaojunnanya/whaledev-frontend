@@ -13,12 +13,13 @@ export function useMaterailDrop(accept: string[], id: string) {
             const didDrop = monitor.didDrop()
             if (didDrop) return
 
-            const props = componentConfig[item.type].defaultProps;
+            const config = componentConfig[item.type];
 
             addComponent({
                 id: String(+new Date()),
                 name: item.type,
-                props
+                desc: config.desc,
+                props: config.defaultProps
             }, id)
         },
         collect: (monitor) => ({

@@ -1,11 +1,12 @@
-import { createElement, memo } from 'react'
+import { createElement, memo, MouseEventHandler } from 'react'
 import { ContentStyle } from './style'
 import { Component, useComponetsStore } from '@/stores/components'
 import { useComponentConfigStore } from '@/stores/component-config'
+import SelectedMask from '@/components/SelectedMask'
 
 export default memo(() => {
 
-  const { components } = useComponetsStore()
+  const { components, setCurComponentId, curComponentId } = useComponetsStore()
   const { componentConfig } = useComponentConfigStore()
 
   const renderComponents = (components: Component[]): React.ReactNode => {
@@ -28,14 +29,37 @@ export default memo(() => {
             renderComponents(component.children || [])
         )
     })
-}
+  }
+
+  const handleClick: MouseEventHandler = (e) => {
+    const path = e.nativeEvent.composedPath();
+
+    for (let i = 0; i < path.length; i += 1) {
+        const ele = path[i] as HTMLElement;
+
+        const componentId = ele.dataset?.componentId;
+        if (componentId) {
+            setCurComponentId(componentId);
+            return;
+        }
+    }
+  }
 
   return (
-    <ContentStyle>
-      {/* <pre>
-      {JSON.stringify(components, null, 2)}
-      </pre> */}
+    <ContentStyle onClick={handleClick} className='edit-area'>
       {renderComponents(components)}
+
+      {
+        curComponentId && (
+          <SelectedMask
+              portalWrapperClassName='portal-wrapper'
+              containerClassName='edit-area'
+              componentId={curComponentId}
+          />
+        )
+      }
+      
+      <div className="portal-wrapper"></div>
     </ContentStyle>
   )
 })

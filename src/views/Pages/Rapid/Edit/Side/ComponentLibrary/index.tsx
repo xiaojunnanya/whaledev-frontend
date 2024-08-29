@@ -8,7 +8,8 @@ export default memo(() => {
   const { componentConfig } = useComponentConfigStore()
 
   const components = useMemo(() => {
-    return Object.values(componentConfig);
+    // 过滤page根
+    return Object.values(componentConfig).filter(item => item.name !== 'Page')
   }, [componentConfig])
 
   return (
@@ -16,7 +17,7 @@ export default memo(() => {
       {
         components.map((item, index) => {
           return (
-            <MaterialItem key={item.name + index} name={item.name}></MaterialItem>
+            <MaterialItem key={item.name + index} name={item.name} desc={item.desc}></MaterialItem>
           )
         })
       }

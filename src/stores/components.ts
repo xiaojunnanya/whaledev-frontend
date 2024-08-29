@@ -5,18 +5,22 @@ export interface Component {
   id: string;
   name: string;
   props: any;
+  desc: string
   children?: Component[];
   parentId?: string;
 }
 
 interface State {
   components: Component[];
+  curComponentId?: string | null;
+  curComponent: Component | null;
 }
 
 interface Action {
   addComponent: (component: Component, parentId?: string) => void;
   deleteComponent: (componentId: string) => void;
   updateComponentProps: (componentId: string, props: any) => void;
+  setCurComponentId: (componentId: string | null) => void;
 }
 
 export const useComponetsStore = create<State & Action>(
@@ -30,6 +34,13 @@ export const useComponetsStore = create<State & Action>(
         children: []
       }
     ],
+    curComponentId: null,
+    curComponent: null,
+    setCurComponentId: (componentId) =>
+      set((state) => ({
+        curComponentId: componentId,
+        curComponent: getComponentById(componentId, state.components),
+      })),
     addComponent: (component, parentId) =>
       set((state) => {
         if (parentId) {

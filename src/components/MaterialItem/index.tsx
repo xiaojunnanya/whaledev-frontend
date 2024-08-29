@@ -3,11 +3,12 @@ import { MaterialItemStyled } from "./style";
 
 export interface MaterialItemProps {
     name: string
+    desc: string
 }
 
 export function MaterialItem(props: MaterialItemProps) {
 
-    const { name } = props;
+    const { name, desc } = props;
 
     const [_, drag] = useDrag({
         type: name,
@@ -18,7 +19,7 @@ export function MaterialItem(props: MaterialItemProps) {
 
     return (
         <MaterialItemStyled ref={drag}>
-            {name}
+            {desc}
         </MaterialItemStyled>
     )
 }
