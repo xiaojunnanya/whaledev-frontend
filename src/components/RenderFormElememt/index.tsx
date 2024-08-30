@@ -1,4 +1,5 @@
-import { ComponentSetter } from '@/stores/component-config'
+
+import { ComponentSetter } from '@/materials/interface'
 import { Input, Select } from 'antd'
 import { memo, useMemo } from 'react'
 

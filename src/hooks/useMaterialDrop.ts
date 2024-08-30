@@ -16,7 +16,7 @@ export function useMaterailDrop(accept: string[], id: string) {
             const config = componentConfig[item.type];
 
             addComponent({
-                id: String(+new Date()),
+                id: item.type + '_' + String(+new Date()),
                 name: item.type,
                 desc: config.desc,
                 props: config.defaultProps

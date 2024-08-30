@@ -101,7 +101,6 @@ export const EditPagesMiddleStyle = styled.div`
 
         &-content{
             height: 100%;
-            /* 遗留的问题：这是个不好的东西，要优化 */
             overflow: hidden;
             transition: all 0.4s ease;
             background-color: #fff;

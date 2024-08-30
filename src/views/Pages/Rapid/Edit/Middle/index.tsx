@@ -16,7 +16,7 @@ export default memo(() => {
         if (!config?.component) {
             return null;
         }
-        // 疑惑：这里的id和name作用是什么？
+        // 疑惑：添加的id name 为什么不会挂载在组件上
         return createElement(
             config.component,
             {

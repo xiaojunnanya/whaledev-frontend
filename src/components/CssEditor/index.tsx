@@ -1,6 +1,8 @@
-import MonacoEditor, { OnMount, EditorProps } from '@monaco-editor/react'
+import MonacoEditor, { OnMount, EditorProps, loader } from '@monaco-editor/react'
 import { editor } from 'monaco-editor'
 import { memo } from 'react'
+import * as monaco from 'monaco-editor'
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 
 export interface EditorFile {
     name: string
@@ -21,6 +23,15 @@ export default memo((props: Props) => {
         options
     } = props;
 
+    // 解决CDN问题
+    self.MonacoEnvironment = {
+        getWorker() {
+        return new cssWorker()
+        },
+    };
+
+    loader.config({ monaco })
+
     const handleEditorMount: OnMount = (editor, monaco) => {
       editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyJ, () => {
           editor.getAction('editor.action.formatDocument')?.run()
@@ -28,7 +39,7 @@ export default memo((props: Props) => {
     }
 
     return <MonacoEditor
-        height={'100%'}
+        height='100%'
         path='component.css'
         language='css'
         onMount={handleEditorMount}
