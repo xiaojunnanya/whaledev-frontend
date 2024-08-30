@@ -2,6 +2,7 @@ import {
   memo,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -28,6 +29,8 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
     labelTop: 0,
     labelLeft: 0,
   });
+
+  const whaleMask = useRef<HTMLDivElement>(null)
 
   const { components, curComponentId, deleteComponent, setCurComponentId} = useComponetsStore()
   const { width } = usePage()
@@ -68,8 +71,10 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
     }
 
     // 如果组件的长度没有展示内容的长度长，展示内容需要从左开始
-    if( labelLeft < 80 ){
-      labelLeft = labelLeft + 80 - width
+    const maskWidth = whaleMask?.current?.offsetWidth || 0
+
+    if( labelLeft < maskWidth ){
+      labelLeft = labelLeft + maskWidth - width
     }
 
     setPosition({
@@ -112,6 +117,7 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
           left: position.labelLeft,
           top: position.labelTop,
         }}
+        ref={whaleMask}
       >
           <div className='whale-mask-desc'>
             {curComponent?.desc}
