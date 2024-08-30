@@ -1,5 +1,6 @@
 
-import Button from ".";
+import ButtonDev from "./dev";
+import ButtonProd from "./prod";
 import { ComponentConfig } from "../interface";
 
 export const ButtonConfig: ComponentConfig = {
@@ -9,7 +10,10 @@ export const ButtonConfig: ComponentConfig = {
         text: '按钮'
     },
     desc: '按钮',
-    component: Button,
+    component: {
+        dev: ButtonDev,
+        prod: ButtonProd
+    },
     setter: [
         {
             title: '按钮属性',
@@ -48,4 +52,14 @@ export const ButtonConfig: ComponentConfig = {
             ]
         }
     ],
+    events:[
+        {
+            name: 'onClick',
+            label: '点击事件',
+        },
+        {
+            name: 'onDoubleClick',
+            label: '双击事件',
+        }
+    ]
 }

@@ -15,17 +15,27 @@ export interface ComponentSetter {
     [key: string]: any;
 }
 
+export interface ComponentEvent {
+    name: string;
+    label: string;
+}
 export interface ComponentConfig {
     name: string;
     defaultProps: Record<string, any>,
     desc: string;
-    setter?: {
+    setter?: {// 属性
         title: string,
         propsList: ComponentSetter[]
     }[];
-    stylesSetter?: {
+    stylesSetter?: { // 样式
         title: string,
         styleList: ComponentSetter[]
     }[]
-    component: any
+    component: {
+        dev: any,
+        prod: any
+    }, // 渲染哪个组件
+    events?: ComponentEvent[] // 事件
 }
+
+

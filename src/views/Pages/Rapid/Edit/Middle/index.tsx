@@ -13,12 +13,12 @@ export default memo(() => {
     return components.map((component: Component) => {
         const config = componentConfig?.[component.name]
 
-        if (!config?.component) {
+        if (!config?.component.dev) {
             return null;
         }
         // 疑惑：添加的id name 为什么不会挂载在组件上
         return createElement(
-            config.component,
+            config.component.dev,
             {
                 key: component.id,
                 id: component.id,
