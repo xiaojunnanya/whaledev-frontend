@@ -4,7 +4,6 @@ import { useComponetsStore } from '@/stores/components';
 import { useComponentConfigStore } from '@/stores/component-config';
 import { Form, Input, Select } from 'antd';
 import { ComponentConfig, ComponentSetter } from '@/materials/interface';
-
 export default memo(() => {
 
   const [form] = Form.useForm();
@@ -21,7 +20,6 @@ export default memo(() => {
   
   function renderFormElememt(setting: ComponentSetter) {
     const { type, options } = setting;
-  
     if (type === 'select') {
       return <Select options={options} />
     } else if (type === 'input') {
@@ -66,7 +64,7 @@ export default memo(() => {
                     return (
                       <Form.Item key={setter.name} name={setter.name} label={setter.label}>
                         {renderFormElememt(setter)}
-                        {/* 遗留的问题：defaulrprops没有传递？ */}
+                        {/* 遗留的问题：组件不受form控制，props无法传递 */}
                         {/* <RenderFormElememt setter={setter} /> */}
                       </Form.Item>
                     )

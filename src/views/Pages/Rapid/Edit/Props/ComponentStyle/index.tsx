@@ -34,7 +34,7 @@ export default memo(() => {
         if(!value) {
             continue;
         }
-        // 这里做了样式的合并
+        // 这里做了样式的合并，取到高度和宽度的数值加上px
         if(['width', 'height'].includes(key) &&  !value.toString().endsWith('px')) {
             value += 'px';
         }
@@ -58,11 +58,12 @@ export default memo(() => {
   }
 
   function valueChange(changeValues: CSSProperties) {
+    // 遗留的问题：宽高px的问题，这里没有处理
     if (curComponentId) {
         updateComponentStyles(curComponentId, changeValues);
     }
   }
-
+  // 遗留的问题：处理好自定义样式与填写样式的优先级
   const handleEditorChange = debounce((value) => {
     setCss(value);
 
