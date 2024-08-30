@@ -34,6 +34,10 @@ export default memo(() => {
         setPageInfo(data.data)
     }
 
+    const preview = () =>{
+        window.open(`/project/${projectId}/preview/page/${pageId}`)
+    }
+
   return (
     <EditPagesStyle>
         <div className="edit-top">
@@ -50,7 +54,7 @@ export default memo(() => {
             <div className='edit-top-right'>
                 <Button size='small'>重置</Button>
                 <Button type='primary' size='small'>保存</Button>
-                <Button size='small'>预览</Button>
+                <Button size='small' onClick={preview}>预览</Button>
             </div>
         </div>
 

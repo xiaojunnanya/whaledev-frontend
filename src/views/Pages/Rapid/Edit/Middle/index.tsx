@@ -45,7 +45,7 @@ export default memo(() => {
         }
     }
   }
-
+  // 遗留的问题：内容过多出现滚动条后mask无法覆盖
   return (
     <ContentStyle onClick={handleClick} className='whale-edit-area'>
 
