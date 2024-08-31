@@ -78,7 +78,6 @@ export default memo(() => {
             css[name.replace(/-\w/, (item) => item.toUpperCase().replace('-', ''))] = value;
         });
 
-        console.log(css);
         updateComponentStyles(curComponentId, { ...form.getFieldsValue(), ...css }, true);
     } catch(e) {}
   }, 500);

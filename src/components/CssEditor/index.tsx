@@ -1,4 +1,4 @@
-import MonacoEditor, { OnMount, EditorProps, loader } from '@monaco-editor/react'
+import Editor, { OnMount, EditorProps, loader } from '@monaco-editor/react'
 import { editor } from 'monaco-editor'
 import { memo } from 'react'
 import * as monaco from 'monaco-editor'
@@ -37,8 +37,8 @@ export default memo((props: Props) => {
           editor.getAction('editor.action.formatDocument')?.run()
       });
     }
-
-    return <MonacoEditor
+    // 遗留的问题：提示框被遮挡
+    return <Editor
         height='100%'
         path='component.css'
         language='css'

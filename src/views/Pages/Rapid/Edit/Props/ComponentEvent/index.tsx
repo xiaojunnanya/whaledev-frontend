@@ -1,53 +1,54 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { ComponentEventStyled } from './style'
 import { useComponetsStore } from '@/stores/components';
 import { useComponentConfigStore } from '@/stores/component-config';
-import { Collapse, CollapseProps, Select } from 'antd';
-import { GoToLink } from './actions/GoToLink';
-import { ShowMessage } from './actions/ShowMessage';
+import { Button, Collapse, CollapseProps, Drawer } from 'antd';
+import { CaretRightOutlined, PlusOutlined } from '@ant-design/icons';
+import { ActionModal } from './actions/ActionModal';
+import { ComponentEvent } from '@/materials/interface';
 
 export default memo(() => {
 
-  const { curComponentId, curComponent, updateComponentProps } = useComponetsStore();
+  const { curComponent } = useComponetsStore();
   const { componentConfig } = useComponentConfigStore();
+  const [open, setOpen] = useState(false);
+  const [curEvent, setCurEvent] = useState<ComponentEvent>()
 
   if (!curComponent) return null;
 
-  function selectAction(eventName: string, value: string) {
-    if (!curComponentId) return;
 
-    updateComponentProps(curComponentId, { [eventName]: { type: value, } })
-  }
-
-  const items: CollapseProps['items'] = (componentConfig[curComponent.name].events || []).map(event => {
+  const items: CollapseProps['items'] = (componentConfig[curComponent.name]?.events || []).map(event => {
       return {
           key: event.name,
           label: event.label,
-          children: <div>
-              <div className='flex items-center'>
-                  <div>动作：</div>
-                  <Select style={{ width: 200 }}
-                      options={[
-                          { label: '显示提示', value: 'showMessage' },
-                          { label: '跳转链接', value: 'goToLink' },
-                      ]}
-                      onChange={(value) => { selectAction(event.name, value) }}
-                      value={curComponent?.props?.[event.name]?.type}
-                  />
-              </div>
-              {
-                curComponent?.props?.[event.name]?.type === 'goToLink' && <GoToLink event={event} />
-              }
-              {
-                curComponent?.props?.[event.name]?.type === 'showMessage' && <ShowMessage event={event}/>
-              }
-          </div>
+          children: <div className='addAction' onClick={() => {
+            setCurEvent(event)
+            setOpen(true)
+          }}><PlusOutlined /> 添加服务编排</div>
       }
   })
 
   return (
     <ComponentEventStyled>
-      <Collapse items={items} ghost/>
+      <Collapse items={items} ghost 
+      expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}/>
+
+      <Drawer
+        title="添加服务编排"
+        extra={
+          <>
+            <Button type='primary' style={{marginRight: '16px'}}>保存</Button>
+            <Button onClick={()=>setOpen(false)}>取消</Button>
+          </>
+        }
+        placement='top'
+        closeIcon={null}
+        open={open}
+        key='top'
+        height='100%'
+      >
+        <ActionModal eventConfig={curEvent!}/>
+      </Drawer>
     </ComponentEventStyled>
   )
 })

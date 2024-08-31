@@ -49,14 +49,14 @@ const addItems = [
     key: 'custom',
     value: '自定义页面',
   },
-  {
-    key: 'screen',
-    value: '大屏页面',
-  },
-  {
-    key: 'service',
-    value: '服务编排',
-  },
+  // {
+  //   key: 'screen',
+  //   value: '大屏页面',
+  // },
+  // {
+  //   key: 'service',
+  //   value: '服务编排',
+  // },
 ];
 
 export default memo(() => {
