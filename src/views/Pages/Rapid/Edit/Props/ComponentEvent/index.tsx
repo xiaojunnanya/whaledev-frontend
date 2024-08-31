@@ -4,8 +4,8 @@ import { useComponetsStore } from '@/stores/components';
 import { useComponentConfigStore } from '@/stores/component-config';
 import { Button, Collapse, CollapseProps, Drawer } from 'antd';
 import { CaretRightOutlined, PlusOutlined } from '@ant-design/icons';
-import { ActionModal } from './actions/ActionModal';
 import { ComponentEvent } from '@/materials/interface';
+import ActionModal from './ActionModal';
 
 export default memo(() => {
 
@@ -47,7 +47,7 @@ export default memo(() => {
         key='top'
         height='100%'
       >
-        <ActionModal eventConfig={curEvent!}/>
+        <ActionModal />
       </Drawer>
     </ComponentEventStyled>
   )
