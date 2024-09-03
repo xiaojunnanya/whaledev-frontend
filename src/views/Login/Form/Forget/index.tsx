@@ -2,13 +2,12 @@ import { memo, useEffect, useState } from 'react'
 import { LockOutlined, MailOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { checkCodeServer, resetPassword, sendEmail } from '@/service/modules/login';
-import { useMode } from '@/stores/login';
-import { useMessage } from '@/stores/global';
+import { useGlobal } from '@/stores/global';
 
 export default memo(() => {
   const [form] = Form.useForm();
-  const { setMode } = useMode()
-  const { setMessage } = useMessage()
+  const { setMode } = useGlobal()
+  const { setMessage } = useGlobal()
   const [ btnName, setBtnName ] = useState<string>('获取验证码')
   const [ codeImg, setCodeImg ] = useState<string>('')
 

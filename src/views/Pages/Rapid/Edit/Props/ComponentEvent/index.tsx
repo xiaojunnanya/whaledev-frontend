@@ -5,7 +5,7 @@ import { useComponentConfigStore } from '@/stores/component-config';
 import { Button, Collapse, CollapseProps, Drawer } from 'antd';
 import { CaretRightOutlined, PlusOutlined } from '@ant-design/icons';
 import { ComponentEvent } from '@/materials/interface';
-import ActionModal from './ActionModal';
+import ServiceLayout from './ServiceLayout';
 
 export default memo(() => {
 
@@ -47,7 +47,7 @@ export default memo(() => {
         key='top'
         height='100%'
       >
-        <ActionModal />
+        <ServiceLayout />
       </Drawer>
     </ComponentEventStyled>
   )

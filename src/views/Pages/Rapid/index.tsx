@@ -5,7 +5,7 @@ import { CopyOutlined, DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlin
 import type { MenuProps } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPage, deletePage, getPage, updatePage } from '@/service/modules/pages';
-import { useMessage } from '@/stores/global';
+import { useGlobal } from '@/stores/global';
 import '@/assets/css/scrollbar.css'
 
 const { Option } = Select
@@ -62,7 +62,7 @@ const addItems = [
 export default memo(() => {
   const params = useParams()
   const { projectId = '', pageId = '' } = params
-  const { setMessage } = useMessage()
+  const { setMessage } = useGlobal()
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const [ pageActive,  setPageActive ] = useState(pageId)

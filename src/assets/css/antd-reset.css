@@ -1,0 +1,14 @@
+/* 全局antd样式重置 */
+
+.ant-spin-dot{
+    color: #00BFFF;
+}
+
+/* tree组件内容不换行 */
+.ant-tree-treenode>.ant-tree-node-content-wrapper{
+    white-space: nowrap;
+}
+
+.ant-modal{
+    top: 64px;
+}

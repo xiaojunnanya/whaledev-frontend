@@ -4,10 +4,10 @@ import { Button } from 'antd'
 import backVideo from '@/assets/video/background.mp4'
 
 import { useNavigate } from 'react-router-dom'
-import { useMessage } from '@/stores/global'
+import { useGlobal } from '@/stores/global'
 
 export default memo(() => {
-  const { setMessage } = useMessage()
+  const { setMessage } = useGlobal()
   const navigate = useNavigate()
   
 

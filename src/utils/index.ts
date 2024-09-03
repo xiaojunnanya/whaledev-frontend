@@ -22,3 +22,20 @@ export function getComponentById(
   }
   return null;
 }
+
+
+// 查找节点的索引及其父节点
+export function findNodeIndexAndParent(children: any, nodeId: string, parentNode = null): any {
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].id === nodeId) {
+      return { index: i, parentNode, selfNode: children[i] };
+    }
+    if (children[i].children) {
+      const result = findNodeIndexAndParent(children[i].children, nodeId, children[i]);
+      if (result) {
+        return result;
+      }
+    }
+  }
+  return null;
+}

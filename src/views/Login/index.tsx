@@ -6,10 +6,10 @@ import LoginModel from './Form/Login'
 import AccountModel from './Form/Register'
 import ForgetModel from './Form/Forget'
 
-import { useMode } from '@/stores/login'
+import { useGlobal } from '@/stores/global'
 
 const Login = memo(() => {
-    const { mode } = useMode()
+    const { mode } = useGlobal()
 
     const showModel  = () =>{
         switch (mode) {

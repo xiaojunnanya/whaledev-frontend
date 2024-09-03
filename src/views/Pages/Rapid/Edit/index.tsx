@@ -9,7 +9,7 @@ import { LeftOutlined } from '@ant-design/icons'
 import computerImg from '@/assets/images/png/computer.png'
 import flatImg from '@/assets/images/png/flat.png'
 import phoneImg from '@/assets/images/png/phone.png'
-import { usePage } from '@/stores/page'
+import { useGlobal } from '@/stores/global'
 
 interface pageType{
     id: number,
@@ -22,7 +22,7 @@ export default memo(() => {
     const navigate = useNavigate()
     const { projectId = '', pageId = '' } = params
     const [ pageInfo, setPageInfo ] = useState<pageType>({} as pageType)
-    const { width: viewWidth } = usePage()
+    const { width: viewWidth } = useGlobal()
 
     useEffect(()=>{
         getPageInfo()

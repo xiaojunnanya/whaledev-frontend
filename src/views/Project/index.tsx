@@ -7,7 +7,7 @@ import { CopyOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant
 import { createProject, deleteProject, getProject, getProjectState, getProjectStateColor, getProjectType, updateProject } from '@/service/modules/project';
 import { getImageShow } from '@/service/modules/common'
 import { useNavigate } from 'react-router-dom'
-import { useMessage } from '@/stores/global'
+import { useGlobal } from '@/stores/global'
 
 const { Meta } = Card;
 const { Option } = Select
@@ -28,7 +28,7 @@ interface projectDataType extends FieldType{
 // 搜索防抖
 export default memo(() => {
   const [form] = Form.useForm()
-  const { setMessage } = useMessage()
+  const { setMessage } = useGlobal()
   const navigate = useNavigate()
 
 

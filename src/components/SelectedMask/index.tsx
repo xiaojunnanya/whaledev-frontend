@@ -10,7 +10,7 @@ import { Popconfirm } from 'antd';
 import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 import { getComponentById } from '@/utils';
 import { useComponetsStore } from '@/stores/components';
-import { usePage } from '@/stores/page';
+import { useGlobal } from '@/stores/global';
 import { SelectedMaskStyled } from './style';
   
 interface SelectedMaskProps {
@@ -33,7 +33,7 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
   const whaleMask = useRef<HTMLDivElement>(null)
 
   const { components, curComponentId, deleteComponent, setCurComponentId} = useComponetsStore()
-  const { width } = usePage()
+  const { width } = useGlobal()
 
   useEffect(() => {
     updatePosition();

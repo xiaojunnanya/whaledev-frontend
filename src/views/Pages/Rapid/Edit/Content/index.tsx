@@ -11,7 +11,7 @@ import EditPageSide from '../Side'
 import Middle from '../Middle'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { usePage } from '@/stores/page'
+import { useGlobal } from '@/stores/global'
 import PropsEvent from '../Props'
 
 
@@ -55,7 +55,7 @@ const editLeftBottom = [
 
 
 export default memo(() => {
-  const  { setWidth } = usePage()
+  const  { setWidth } = useGlobal()
   const editMiddleContent = useRef<HTMLDivElement>(null)
   const [ rightContentExpand, setRightContentExpand ] = useState(true)
   const [ active, setActive ] = useState<itemProps>({} as itemProps)
