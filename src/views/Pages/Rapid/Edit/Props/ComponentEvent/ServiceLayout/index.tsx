@@ -24,6 +24,19 @@ interface IProps{
   curEventAction: any[] | undefined
 }
 
+const initList: NodeType[] = [
+  {
+    id: 'start',
+    type: 'start',
+    title: '开始',
+  },
+  {
+    id: 'end',
+    type: 'end',
+    title: '结束',
+  },
+]
+
 
 export default memo((props: IProps) => {
   const { curEventAction } = props
@@ -38,20 +51,8 @@ export default memo((props: IProps) => {
     if(curEventAction){
       setList(curEventAction)
     }else{
-      setList([
-        {
-          id: 'start',
-          type: 'start',
-          title: '开始',
-        },
-        {
-          id: 'end',
-          type: 'end',
-          title: '结束',
-        },
-      ])
+      setList(initList)
     }
-    
     
   }, [curEventAction])
 
@@ -90,7 +91,6 @@ export default memo((props: IProps) => {
   };
 
   
-
   // 构建节点
   function createNode(title: string, type: 'normal' | 'condition', id: string) {
     const nodeList = JSON.parse(JSON.stringify(list));

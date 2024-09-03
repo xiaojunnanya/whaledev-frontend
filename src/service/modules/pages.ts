@@ -37,3 +37,14 @@ export const deletePage = (pageId: string) => whaleReq.delete({url:`/pages/${pag
 
 // 获取页面信息
 export const getPageInfoById = (pageId: string) => whaleReq.get({url: `/pages/info/${pageId}`})
+
+// 保存json
+export const saveJson = (args: any) => whaleReq.post({
+    url: '/pages/savejson',
+    data:{
+        ...args
+    }
+})
+
+// 获取页面json
+export const getPageJsonById = (pageId: string) => whaleReq.get({url: `/pages/json/${pageId}`})

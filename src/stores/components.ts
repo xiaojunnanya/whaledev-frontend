@@ -22,6 +22,7 @@ interface State {
 
 interface Action {
   addComponent: (component: Component, parentId?: string) => void;
+  updeteComponent: (component: Component[]) => void;
   deleteComponent: (componentId: string) => void;
   updateComponentProps: (componentId: string, props: any) => void;
   updateComponentEvents: (componentId: string, event: any) => void;
@@ -45,6 +46,10 @@ export const useComponetsStore = create<State & Action>(
     curComponentId: null,
     curComponent: null,
     componentActionList: [],
+    updeteComponent: (component: Component[]) => 
+      set(() => ({
+        components: component
+      })),
     setCurComponentId: (componentId) =>
       set((state) => ({
         curComponentId: componentId,
