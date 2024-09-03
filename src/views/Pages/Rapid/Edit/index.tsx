@@ -39,7 +39,7 @@ export default memo(() => {
 
     const getPageJson = async () => {
         // 获取页面信息
-        const { data } =  await getPageJsonById(pageId)
+        const { data } =  await getPageJsonById(projectId, pageId)
         if(data?.data?.pageJson){
             updeteComponent(JSON.parse(data.data.pageJson))
         }
@@ -51,7 +51,7 @@ export default memo(() => {
 
     const save = async () =>{
         // 保存页面
-        const { data } = await saveJson({ pageId, pageJson: JSON.stringify(components) })
+        const { data } = await saveJson({ pageId, projectId, pageJson: JSON.stringify(components) })
 
         if(data.statusCode === 1200){
             setMessage({type:'success', text: data?.data})

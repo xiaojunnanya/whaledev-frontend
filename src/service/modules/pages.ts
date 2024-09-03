@@ -47,4 +47,4 @@ export const saveJson = (args: any) => whaleReq.post({
 })
 
 // 获取页面json
-export const getPageJsonById = (pageId: string) => whaleReq.get({url: `/pages/json/${pageId}`})
+export const getPageJsonById = (projectId: string, pageId: string) => whaleReq.get({url: `/pages/json/${projectId}/${pageId}`})
