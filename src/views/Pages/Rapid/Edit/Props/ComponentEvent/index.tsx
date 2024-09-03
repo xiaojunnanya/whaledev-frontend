@@ -9,7 +9,7 @@ import ServiceLayout from './ServiceLayout';
 
 export default memo(() => {
 
-  const { curComponent } = useComponetsStore();
+  const { curComponent, componentActionList, updateComponentEvents } = useComponetsStore();
   const { componentConfig } = useComponentConfigStore();
   const [open, setOpen] = useState(false);
   const [curEvent, setCurEvent] = useState<ComponentEvent>()
@@ -28,6 +28,12 @@ export default memo(() => {
       }
   })
 
+  const save = () => {
+    curEvent!.action = componentActionList
+    updateComponentEvents(curComponent.id, curEvent)
+    setOpen(false)
+  }
+
   return (
     <ComponentEventStyled>
       <Collapse items={items} ghost 
@@ -37,7 +43,7 @@ export default memo(() => {
         title="添加服务编排"
         extra={
           <>
-            <Button type='primary' style={{marginRight: '16px'}}>保存</Button>
+            <Button type='primary' style={{marginRight: '16px'}} onClick={save}>保存</Button>
             <Button onClick={()=>setOpen(false)}>取消</Button>
           </>
         }
@@ -47,7 +53,7 @@ export default memo(() => {
         key='top'
         height='100%'
       >
-        <ServiceLayout />
+        <ServiceLayout curEventAction={curEvent?.action}/>
       </Drawer>
     </ComponentEventStyled>
   )

@@ -6,8 +6,7 @@ import { useGlobal } from '@/stores/global';
 
 export default memo(() => {
   const [form] = Form.useForm();
-  const { setMode } = useGlobal()
-  const { setMessage } = useGlobal()
+  const { setMode, setMessage } = useGlobal()
   const [ btnName, setBtnName ] = useState<string>('获取验证码')
   const [ codeImg, setCodeImg ] = useState<string>('')
 

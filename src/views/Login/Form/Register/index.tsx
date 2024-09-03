@@ -6,8 +6,7 @@ import { checkCodeServer, register, sendEmail } from '@/service/modules/login';
 import { useGlobal } from '@/stores/global';
 
 export default memo(() => {
-  const { setMode } = useGlobal()
-  const { setMessage } = useGlobal()
+  const { setMode, setMessage } = useGlobal()
   const [form] = Form.useForm()
   const [ codeImg, setCodeImg ] = useState<string>('')
   const [ btnName, setBtnName ] = useState<string>('获取验证码')

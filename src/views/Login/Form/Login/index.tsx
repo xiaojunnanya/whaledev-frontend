@@ -8,8 +8,7 @@ import SparkMD5 from 'spark-md5';
 import { useGlobal } from '@/stores/global';
 
 export default memo(() => {
-  const { setMode } = useGlobal()
-  const { setMessage } = useGlobal()
+  const { setMode, setMessage } = useGlobal()
   const [form] = Form.useForm()
   const [ codeImg, setCodeImg ] = useState<string>('')
   const naviage = useNavigate()
