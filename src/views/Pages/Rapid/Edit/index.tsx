@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react'
 import { EditPagesStyle } from './style'
 import Content from './Content'
-import { Button, InputNumber } from 'antd'
+import { Button, InputNumber, Modal } from 'antd'
 import { getPageInfoById, getPageJsonById, saveJson } from '@/service/modules/pages'
 import { useNavigate, useParams } from 'react-router-dom'
 import { LeftOutlined } from '@ant-design/icons'
@@ -25,6 +25,7 @@ export default memo(() => {
     const { projectId = '', pageId = '' } = params
     const [ pageInfo, setPageInfo ] = useState<pageType>({} as pageType)
     const { width: viewWidth, setMessage } = useGlobal()
+    const [ showResetModal, setShowResetModal ] = useState(false)
 
     useEffect(()=>{
         getPageJson()
@@ -60,8 +61,30 @@ export default memo(() => {
           }
     }
 
+    const reset = () =>{
+        // 重置页面
+        updeteComponent([
+            {
+                id: '0',
+                name: 'Page',
+                props: {},
+                desc: '页面',
+                children: []
+            }
+        ])
+        setShowResetModal(false)
+    }
+
+
   return (
     <EditPagesStyle>
+        
+        <Modal title="提示" open={showResetModal} onOk={reset} 
+        onCancel={()=> setShowResetModal(false) }>
+            你确定要重置该页面吗
+        </Modal>
+
+
         <div className="edit-top">
             <div className='edit-top-left'>
                 <LeftOutlined onClick={()=>{navigate(`/project/${projectId}/rapid/page/${pageId}`)}}/>
@@ -74,7 +97,7 @@ export default memo(() => {
                 <InputNumber addonAfter="px" value={viewWidth}/>
             </div>
             <div className='edit-top-right'>
-                <Button size='small'>重置</Button>
+                <Button size='small' onClick={()=> setShowResetModal(true) }>重置</Button>
                 <Button type='primary' size='small' onClick={save}>保存</Button>
                 <Button size='small' onClick={preview}>预览</Button>
             </div>
