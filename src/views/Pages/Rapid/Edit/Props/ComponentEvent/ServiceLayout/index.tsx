@@ -294,35 +294,35 @@ export default memo((props: IProps) => {
     );
   };
 
-  const renderNodeList = useMemo(() => {
-    function renderNode(nodes: any) {
-      return nodes.map((node: any) => {
-        switch (node.type) {
-          case 'start':
-            return <StartNode key={node.id} />;
-          case 'end':
-            return <EndNode key={node.id} />;
-          case 'normal':
-          case 'success':
-          case 'fail':
-            return <NormalNode key={node.id} node={node} />;
-          case 'condition':
-            return (
-              <ConditionNode key={node.id} title={node.title} id={node.id}>
-                {node.children.map((item: any, index: number) => {
-                  return (
-                    <ConditionItem key={item.id} type={index === 0 ? 'start' : index == node.children.length - 1 ? 'end' : 'center'}>
-                      {renderNode([item])}
-                      {renderNode(item.children)}
-                    </ConditionItem>
-                  );
-                })}
-              </ConditionNode>
-            );
-        }
-      });
-    }
+  function renderNode(nodes: any) {
+    return nodes.map((node: any) => {
+      switch (node.type) {
+        case 'start':
+          return <StartNode key={node.id} />;
+        case 'end':
+          return <EndNode key={node.id} />;
+        case 'normal':
+        case 'success':
+        case 'fail':
+          return <NormalNode key={node.id} node={node} />;
+        case 'condition':
+          return (
+            <ConditionNode key={node.id} title={node.title} id={node.id}>
+              {node.children.map((item: any, index: number) => {
+                return (
+                  <ConditionItem key={item.id} type={index === 0 ? 'start' : index == node.children.length - 1 ? 'end' : 'center'}>
+                    {renderNode([item])}
+                    {renderNode(item.children)}
+                  </ConditionItem>
+                );
+              })}
+            </ConditionNode>
+          );
+      }
+    });
+  }
 
+  const renderNodeList = useMemo(() => {
     return renderNode(list)
   }, [list])
 

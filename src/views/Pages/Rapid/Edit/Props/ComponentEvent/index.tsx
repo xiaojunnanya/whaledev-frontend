@@ -19,9 +19,9 @@ export default memo(() => {
   const arr2 = componentConfig[curComponent.name]?.events || []
   // arr2是内置的事件，arr1是接口获取的，arr1存在的时候将arr2过滤掉
 
-  const filteredArr2 = arr2.filter(item2 => !arr1.some(item1 => item1.name === item2.name));
+  const filteredArr2 = arr2.filter(item2 => !arr1.some(item1 => item1.name === item2.name))
 
-  const arr = [...arr1, ...filteredArr2];
+  const arr = [...arr1, ...filteredArr2]
 
   const items: CollapseProps['items'] = arr.map(event => {
       return {
