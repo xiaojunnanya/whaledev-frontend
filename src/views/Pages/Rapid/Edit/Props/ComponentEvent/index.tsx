@@ -73,6 +73,7 @@ export default memo(() => {
         open={open}
         key='top'
         height='100%'
+        destroyOnClose={true}
       >
         <ServiceLayout curEventAction={curEvent?.action}/>
       </Drawer>

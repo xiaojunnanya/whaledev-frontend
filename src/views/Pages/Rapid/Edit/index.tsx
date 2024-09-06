@@ -19,7 +19,7 @@ interface pageType{
 }
 
 export default memo(() => {
-    const { components, updeteComponent } = useComponetsStore()
+    const { components, updeteComponent, setCurComponentId } = useComponetsStore()
     const params = useParams()
     const navigate = useNavigate()
     const { projectId = '', pageId = '' } = params
@@ -73,6 +73,7 @@ export default memo(() => {
             }
         ])
         setShowResetModal(false)
+        setCurComponentId('')
     }
 
 

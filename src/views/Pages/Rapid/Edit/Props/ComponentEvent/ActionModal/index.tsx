@@ -1,6 +1,8 @@
 import { Form, Modal } from 'antd';
 import { memo, useEffect, useState } from 'react'
 import { ActionModalStyled } from './style';
+import Link from '../Action/Link';
+import Message from '../Action/Message';
 
 interface IProps{
   showModal:{
@@ -18,11 +20,14 @@ export default memo((props: IProps) => {
   const { showActionModal, setShowActionModal } = showModal
   const { saveAction, setSaveAction } = handleAction
   const [ action, setAction ] = useState<any>(saveAction)
+  const [form] = Form.useForm()
+
   useEffect(()=>{
     setAction(saveAction)
+    form.setFieldsValue(saveAction)
   }, [saveAction])
   
-  const [form] = Form.useForm();
+  
   const formLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
@@ -62,6 +67,26 @@ export default memo((props: IProps) => {
         }
       ],
     },
+    {
+      label: '测试',
+      key: 'text',
+      children: [
+        {
+          label: '访问链接',
+          key: 'link',
+          render: () => {
+            return  <Link></Link>
+          }
+        },
+        {
+          label: '消息提示',
+          key: 'message',
+          render: () => {
+            return  <Message></Message>
+          }
+        }
+      ],
+    },
   ];
 
   const renderEle = (key: string) => {
@@ -84,9 +109,11 @@ export default memo((props: IProps) => {
   }
 
   const handleOk = () =>{
+    const values = form.getFieldsValue()
     setSaveAction({
       key: action.key,
       label: action.label,
+      ...values
     })
     setAction({})
     setShowActionModal(false)
