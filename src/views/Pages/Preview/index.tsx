@@ -2,7 +2,6 @@ import { getPageJsonById } from '@/service/modules/pages'
 import { useComponentConfigStore } from '@/stores/component-config'
 import { Component } from '@/stores/components'
 import { handleActionFlow } from '@/utils'
-import { message } from 'antd'
 import { createElement, memo, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
