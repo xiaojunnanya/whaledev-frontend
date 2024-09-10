@@ -18,7 +18,7 @@ export interface ComponentSetter {
 export interface ComponentEvent {
     name: string;
     label: string;
-    action: any[]
+    action?: any[]
 }
 export interface ComponentConfig {
     name: string;
