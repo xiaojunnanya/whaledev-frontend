@@ -24,6 +24,7 @@ interface Action {
   addComponent: (component: Component, parentId?: string) => void;
   updeteComponent: (component: Component[]) => void;
   deleteComponent: (componentId: string) => void;
+  updeteComponentById: (componentId: string, component: Component) => void;
   updateComponentProps: (componentId: string, props: any) => void;
   updateComponentEvents: (componentId: string, event: any) => void;
   setCurComponentId: (componentId: string | null) => void;
@@ -95,6 +96,15 @@ export const useComponetsStore = create<State & Action>(
         }
       }
     },
+    updeteComponentById: (componentId, comp) =>
+      set((state) => {
+        let component = getComponentById(componentId, state.components);
+        if (component) {
+          component = {...component, ...comp};
+          return {components: [...state.components]};
+        }
+        return { components: [...state.components] }
+      }),
     updateComponentProps: (componentId, props) =>
       set((state) => {
         const component = getComponentById(componentId, state.components);
@@ -106,27 +116,27 @@ export const useComponetsStore = create<State & Action>(
 
         return {components: [...state.components]};
       }),
-      updateComponentEvents: (componentId, events) =>
-        set((state) => {
-          const component = getComponentById(componentId, state.components);
-          if (component) {
-            if(component.events){
-                // component.events.push(events);
-                for (const item of component.events) {
-                  if(item.name === events.name){
-                    item.action = events.action;
-                    break
-                  }
+    updateComponentEvents: (componentId, events) =>
+      set((state) => {
+        const component = getComponentById(componentId, state.components);
+        if (component) {
+          if(component.events){
+              // component.events.push(events);
+              for (const item of component.events) {
+                if(item.name === events.name){
+                  item.action = events.action;
+                  break
                 }
-            }else{
-                component.events = [events];
-            }
-  
-            return {components: [...state.components]};
+              }
+          }else{
+              component.events = [events];
           }
-  
+
           return {components: [...state.components]};
-        }),
+        }
+
+        return {components: [...state.components]};
+      }),
     updateComponentStyles: (componentId, styles, replace) =>
       set((state) => {
         const component = getComponentById(componentId, state.components);
@@ -138,9 +148,10 @@ export const useComponetsStore = create<State & Action>(
   
         return {components: [...state.components]};
       }),
-      setComponentActionList: (list: any[]) => set(() => ({
+    setComponentActionList: (list: any[]) => 
+      set(() => ({
         componentActionList: list
-    }))
+      }))
     })
   )
 );

@@ -7,9 +7,9 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Popconfirm } from 'antd';
-import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 import { getComponentById } from '@/utils';
-import { useComponetsStore } from '@/stores/components';
+import { Component, useComponetsStore } from '@/stores/components';
 import { useGlobal } from '@/stores/global';
 import { SelectedMaskStyled } from './style';
   
@@ -32,7 +32,7 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
 
   const whaleMask = useRef<HTMLDivElement>(null)
 
-  const { components, curComponentId, deleteComponent, setCurComponentId} = useComponetsStore()
+  const { components, curComponentId, deleteComponent, setCurComponentId, updeteComponentById} = useComponetsStore()
   const { width } = useGlobal()
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
   useEffect(() => {
     setTimeout(()=>{
       updatePosition();
-    }, 200)
+    }, 100)
   }, [components])
 
   function updatePosition() {
@@ -100,6 +100,23 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
       setCurComponentId(null)
   }
 
+  
+  const move = (curComponent: Component, type: 'up' | 'down') => {
+    const { parentId } = curComponent
+    // 拿到父id取父children
+    const parent = getComponentById(parentId!, components)
+    const children = parent?.children || []
+    if(!children || !parent?.children) return
+
+    const index = children.findIndex(item => item.id === componentId)
+    const curIndex = type === 'up' ? index - 1 : index + 1
+    const curLen = type === 'up' ? 0 : children.length - 1
+    if(index === curLen) return
+    [ children[index], children[curIndex] ] = [ children[curIndex], children[index] ]
+    parent.children = children
+    updeteComponentById(parent!.id, parent!)
+  }
+
   return createPortal((
     <SelectedMaskStyled>
       <div className='whale-mask-container'
@@ -122,12 +139,14 @@ const SelectedMask = memo(({ containerClassName, portalWrapperClassName, compone
           <div className='whale-mask-desc'>
             {curComponent?.desc}
           </div>
-          
+          {/* 画布不能被选中 */}
           {
             curComponentId !== '0' && (
               <>
                 <div className='whale-mask-line'>|</div>
                 <div className='whale-mask-icon'>
+                  <ArrowUpOutlined onClick={()=>{move(curComponent!, 'up')}}/>
+                  <ArrowDownOutlined onClick={()=>{move(curComponent!, 'down')}}/>
                   <CopyOutlined />
                   <Popconfirm
                     title="确认删除？"

@@ -18,6 +18,7 @@ export function useMaterailDrop(accept: string[], id: string) {
             // 处理过的就不在处理了
             const didDrop = monitor.didDrop()
             if (didDrop) return
+            // 这里暂时去除画板中组件拖拽，所以这个if暂时没有用
             if(item.dragType === 'move') {
                 const component = getComponentById(item.id, components)!;
                 deleteComponent(item.id);
