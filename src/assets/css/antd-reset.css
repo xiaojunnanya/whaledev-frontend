@@ -12,3 +12,14 @@
 .ant-modal{
     top: 64px;
 }
+
+.ant-collapse-item{
+    margin-bottom: 10px;
+
+    .ant-collapse-header{
+        border-radius: 0px !important;
+        padding: 5px 10px !important;
+        background-color:#F4F8FF;
+    }
+    
+}

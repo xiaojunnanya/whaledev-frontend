@@ -24,6 +24,8 @@ export interface ComponentConfig {
     name: string;
     defaultProps: Record<string, any>,
     desc: string;
+    headTitle: string;
+    smallTitle: string;
     setter?: {// 属性
         title: string,
         propsList: ComponentSetter[]
