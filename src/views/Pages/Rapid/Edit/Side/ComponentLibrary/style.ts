@@ -8,21 +8,22 @@ export const ComponentLibraryStyled = styled.div`
         margin: 0 10px;    
     }
 
-    .ant-tabs-nav{
-        margin-bottom: 10px;
-    }
-
     .ant-tabs{
         height: calc(100% - 24px);
-    }
 
-    .ant-tabs-content-holder{
-        overflow: auto;
-    }
+        .noComponents{
+            text-align: center;
+        }
 
-    .ant-collapse-content-box{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 !important;
+        
+        .ant-tabs-content-holder{
+            overflow: auto;
+        }
+
+        .ant-collapse-content-box{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 0 !important;
+        }
     }
 `
