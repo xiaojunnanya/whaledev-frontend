@@ -48,7 +48,7 @@ export default memo(() => {
   const handleChange = debounce((value: string) => {
     setInputValue(value)
   }, 500)
-
+  new Array()
   return (
     <ComponentLibraryStyled>
       <div className='search-input'>
@@ -57,9 +57,11 @@ export default memo(() => {
       <Tabs centered>
         {
           components.length !== 0 ? components.map((comItem, ComIndex) => {
+
             return (
               <Tabs.TabPane tab={comItem.label} key={ComIndex}>
-                <Collapse ghost expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}>
+                <Collapse ghost defaultActiveKey={new Array(comItem.children.length).fill(0).map((_, i) => i)}
+                  expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}>
                   {
                     comItem.children.map((item: any, index: number) => {
                       return (

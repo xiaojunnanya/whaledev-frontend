@@ -23,9 +23,9 @@ export default memo(() => {
 
   const arr = [...arr1, ...filteredArr2]
 
-  const items: CollapseProps['items'] = arr.map(event => {
+  const items: CollapseProps['items'] = arr.map((event, index) => {
       return {
-          key: event.name,
+          key: index,
           label: event.label,
           children: (
             <div className='addAction' onClick={() => {
@@ -58,6 +58,7 @@ export default memo(() => {
   return (
     <ComponentEventStyled>
       <Collapse items={items} ghost 
+      defaultActiveKey={new Array(arr.length).fill(0).map((_, i) => i)}
       expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}/>
 
       <Drawer
