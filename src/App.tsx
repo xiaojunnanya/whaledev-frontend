@@ -52,9 +52,20 @@ const App = memo(() => {
     }
   }, [globalMessage])
 
-  // 捕获错误：系统+网络(通过promise.reject抛出)
+  // 捕获错误：系统+网络(在封装的axios中通过promise.reject抛出)
   const catchErr = (e: any) =>{
+    // https://juejin.cn/post/7416282129451810867#heading-4
 
+    // const target = e.target
+    // if (!target || (target && !target?.localName)) { 
+    //   console.log(' JS运行错误')
+    // }
+
+    // if(target?.localName){ 
+    //   console.log('资源加载错误')
+    // }
+
+    
     let notificationMessage = {
       message: 'Error',
       description:'Unknown error',
@@ -63,7 +74,6 @@ const App = memo(() => {
     }
 
     if(e.reason){
-      console.log(e.reason);
       const { reason } = e
       // promise.reject抛出
       notificationMessage = {
