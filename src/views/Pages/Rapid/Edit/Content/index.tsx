@@ -60,7 +60,7 @@ export default memo(() => {
   const [ rightContentExpand, setRightContentExpand ] = useState(true)
   const [ active, setActive ] = useState<itemProps>({} as itemProps)
   // 是否固定
-  const [ isAffix, setIsAffix ] = useState(true)
+  const [ isAffix, setIsAffix ] = useState(false)
 
 
   useEffect(()=>{

@@ -38,7 +38,7 @@ export default memo((props: propsType) => {
   }
 
   return (
-    <EditPageSideStyle>
+    <EditPageSideStyle style={{width: active.key === 'sourceCode' ? 600 - 1 : 300  - 1 }}>
       <div className='side-top'>
         <div className='side-top-title'>{active.title}</div>
         <div className='side-top-right'>

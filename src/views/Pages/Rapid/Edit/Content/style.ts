@@ -49,7 +49,6 @@ export const EditPagesMiddleStyle = styled.div`
     }
 
     .edit-side{
-        width: 299px;
         border-left: 1px solid #EDEFF3;
         height: 100%;
         display: none;
